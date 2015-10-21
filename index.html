@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+
+<form class="modal" data-backdrop="static" data-keyboard="false" id="select-element-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Select Element To Add</h4>
+            </div>
+            <div class="modal-body col-sm-12">
+                <div class="row form-group">
+                    <div class="col-sm-12">
+                        <div class="col-sm-12">
+                            <input type="button" id="checkboxModalButton" class="btn btn-success selectElementButton" value="Checkbox Input">
+                            <input type="button" id="radioModalButton" class="btn btn-success selectElementButton" value="Radio Input">
+                            <input type="button" id="selectModalButton" class="btn btn-success selectElementButton" value="Select Input">
+                            <input type="button" id="textInputModalButton" class="btn btn-success selectElementButton" value="Text Input">
+                            <input type="button" id="textareaModalButton" class="btn btn-success selectElementButton" value="Textarea Input">
+                            <input type="button" id="textModalButton" class="btn btn-success selectElementButton" value="Text Element">
+                            <input type="button" id="submitModalButton" class="btn btn-success selectElementButton" value="Submit Element">
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form class="modal" data-backdrop="static" data-keyboard="false" id="add-checkbox-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Checkbox Element</h4>
+            </div>
+            <div class="modal-body col-sm-12">
+                <div id="showCheckboxModal" class="col-sm-12">
+                    <div class="row form-group">
+                        <div class="col-sm-12">
+                            <label for="checkboxOverLabel" class="col-sm-12 control-label">Overhead Label</label>
+                            <div class="col-sm-12">
+                                <input type="text" id="checkboxOverLabel" name="checkboxOverLabel" class="form-control">
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-12">
+                            <label for="checkboxName" class="col-sm-12 control-label">Checkbox Group Name</label>
+                            <div class="col-sm-12">
+                                <input type="text" id="checkboxName" name="checkboxName" class="form-control">
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-12 table-responsive">
+                            <label class="col-sm-12 errorLabel sortErrorLabel"></label>
+                            <table id="checkboxTable" class="table table-bordered text-center">
+                                <thead>
+                                <tr class="success">
+                                    <th class="addBold">Remove</th>
+                                    <th class="addBold">ID</th>
+                                    <th class="addBold">Classes</th>
+                                    <th class="addBold">Text Label</th>
+                                    <th class="addBold">Value</th>
+                                </tr>
+                                </thead>
+                                <tbody id='checkboxBody'>
+                                <tr>
+                                    <td>
+                                        <button type="button" class="close form-control" aria-hidden="true">X</button>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control checkID">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control checkClass">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control checkLabel">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control checkValue">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-sm-6 form-group col-sm-offset-6">
+                            <input type="button" id="addCheckbox" class="btn btn-primary form-control" value="Add Checkbox">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-warning" id="insertCheckboxElement">Add Element</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form class="modal" data-backdrop="static" data-keyboard="false" id="add-radio-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Radio Element</h4>
+            </div>
+            <div class="modal-body col-sm-12">
+                <div id="showRadioButtonModal" class="col-sm-12">
+                    <div class="row form-group">
+                        <div class="col-sm-12">
+                            <label for="radioOverLabel" class="col-sm-12 control-label">Overhead Label</label>
+                            <div class="col-sm-12">
+                                <input type="text" id="radioOverLabel" name="radioOverLabel" class="form-control">
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-12">
+                            <label for="radioName" class="col-sm-12 control-label">Checkbox Group Name</label>
+                            <div class="col-sm-12">
+                                <input type="text" id="radioName" name="radioName" class="form-control">
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-12 table-responsive">
+                            <label class="col-sm-12 errorLabel sortErrorLabel"></label>
+                            <table id="radioTable" class="table table-bordered text-center">
+                                <thead>
+                                <tr class="success">
+                                    <th class="addBold">Remove</th>
+                                    <th class="addBold">ID</th>
+                                    <th class="addBold">Classes</th>
+                                    <th class="addBold">Text Label</th>
+                                    <th class="addBold">Value</th>
+                                </tr>
+                                </thead>
+                                <tbody id='radioBody'>
+                                <tr>
+                                    <td>
+                                        <button type="button" class="close form-control" aria-hidden="true">X</button>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control radioID">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control radioClass">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control radioLabel">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control radioValue">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-sm-6 form-group col-sm-offset-6">
+                            <input type="button" id="addRadio" class="btn btn-primary form-control" value="Add Radio Button">
+                        </div>
+                    </div>
+                </div>
+            </div>    
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-warning" id="insertRadioElement">Add Element</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form class="modal" data-backdrop="static" data-keyboard="false" id="add-select-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Select Element</h4>
+            </div>
+            <div class="modal-body col-sm-12">
+                <div id="showDropdownModal" class="col-sm-12">
+                    <div class="row form-group">
+                        <div class="col-sm-12">
+                            <label for="selectElementID" class="col-sm-12 control-label">Element ID:</label>
+                            <div class="col-sm-12">
+                                <input type="text" id="selectElementID" name="selectElementID" class="form-control">
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h5 class="addBold">Some Allowed Classes</h5>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="col-sm-8">
+                                <p class="possibleClasses">required</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-12">
+                            <label for="selectElementClasses" class="col-sm-12 control-label">Element Classes:</label>
+                            <div class="col-sm-12">
+                                <input type="text" id="selectElementClasses" name="selectElementClasses" class="form-control">
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+                    </div>
+                    <div class="row form-group labelRow">
+                        <div class="col-sm-12">
+                            <label for="selectElementLabelText" class="col-sm-12 control-label">Label Text:</label>
+                            <div class="col-sm-12">
+                                <input type="text" id="selectElementLabelText" name="selectElementLabelText" class="form-control">
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-12 table-responsive">
+                            <label class="col-sm-12 errorLabel sortErrorLabel"></label>
+                            <table id="optionTable" class="table table-bordered text-center">
+                                <thead>
+                                <tr class="success">
+                                    <th class="addBold">Remove</th>
+                                    <th class="addBold">Name</th>
+                                    <th class="addBold">Value</th>
+                                    <th class="addBold">Options</th>
+                                </tr>
+                                </thead>
+                                <tbody id='optionBody'>
+                                <tr>
+                                    <td>
+                                        <button type="button" class="close form-control" aria-hidden="true">X</button>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control optionName">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control optionValue">
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <input type="checkbox" class="optionSelected">
+                                            <label class="smallText">Selected</label>
+                                        </div>
+                                        <div class="row">
+                                            <input type="checkbox" class="optionDisabled">
+                                            <label class="smallText">Disabled</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-sm-6 form-group col-sm-offset-6">
+                            <input type="button" id="addOption" class="btn btn-primary form-control" value="Add Option">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-warning" id="insertSelectElement">Add Element</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form class="modal" data-backdrop="static" data-keyboard="false" id="add-text-input-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Text Input Element</h4>
+            </div>
+            <div class="modal-body col-sm-12">
+                <div id="showTextModal" class="col-sm-12">
+                    <div class="row form-group">
+                        <div class="col-sm-12">
+                            <label for="textElementID" class="col-sm-12 control-label">Element ID:</label>
+                            <div class="col-sm-12">
+                                <input type="text" id="textElementID" name="textElementID" class="form-control">
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h5 class="addBold">Some Allowed Classes</h5>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="col-sm-8">
+                                <p class="possibleClasses">required</p>
+                                <p class="possibleClasses">phoneMask</p>
+                                <p class="possibleClasses">dateMask</p>
+                                <p class="possibleClasses">threeDigitMask</p>
+                                <p class="possibleClasses">fourDigitMask</p>
+                                <p class="possibleClasses">positive-integer</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-12">
+                            <label for="textElementClasses" class="col-sm-12 control-label">Element Classes:</label>
+                            <div class="col-sm-12">
+                                <input type="text" id="textElementClasses" name="textElementClasses" class="form-control">
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+                    </div>
+                    <div class="row form-group labelRow">
+                        <div class="col-sm-12">
+                            <label for="textElementLabelText" class="col-sm-12 control-label">Label Text:</label>
+                            <div class="col-sm-12">
+                                <input type="text" id="textElementLabelText" name="textElementLabelText" class="form-control">
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-12">
+                            <label for="textValue" class="col-sm-12 control-label">Text Value:</label>
+                            <div class="col-sm-12">
+                                <input type="text" id="textValue" name="textValue" class="form-control">
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-12">
+                            <label for="textPlaceholder" class="col-sm-12 control-label">Text Placeholder:</label>
+                            <div class="col-sm-12">
+                                <input type="text" id="textPlaceholder" name="textPlaceholder" class="form-control">
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-warning" id="insertTextInputElement">Add Element</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form class="modal" data-backdrop="static" data-keyboard="false" id="add-textarea-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Textarea Element</h4>
+            </div>
+            <div class="modal-body col-sm-12">
+                <div id="showTextAreaModal" class="col-sm-12">
+                    <div class="row form-group">
+                        <div class="col-sm-12">
+                            <label for="textareaElementID" class="col-sm-12 control-label">Element ID:</label>
+                            <div class="col-sm-12">
+                                <input type="text" id="textareaElementID" name="textareaElementID" class="form-control">
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h5 class="addBold">Some Allowed Classes</h5>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="col-sm-8">
+                                <p class="possibleClasses">required</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-12">
+                            <label for="textareaElementClasses" class="col-sm-12 control-label">Element Classes:</label>
+                            <div class="col-sm-12">
+                                <input type="text" id="textareaElementClasses" name="textareaElementClasses" class="form-control">
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+                    </div>
+                    <div class="row form-group labelRow">
+                        <div class="col-sm-12">
+                            <label for="textareaElementLabelText" class="col-sm-12 control-label">Label Text:</label>
+                            <div class="col-sm-12">
+                                <input type="text" id="textareaElementLabelText" name="textareaElementLabelText" class="form-control">
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-12">
+                            <label for="textareaValue" class="col-sm-12 control-label">Textarea Value:</label>
+                            <div class="col-sm-12">
+                                <textarea id="textareaValue" cols="4" name="textareaValue" class="form-control"></textarea>
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-12">
+                            <label for="textareaPlaceholder" class="col-sm-12 control-label">Textarea Placeholder:
+                            </label>
+                            <div class="col-sm-12">
+                                <textarea id="textareaPlaceholder" cols="4" name="textareaPlaceholder" class="form-control"></textarea>
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-warning" id="insertTextareaElement">Add Element</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form class="modal" data-backdrop="static" data-keyboard="false" id="add-text-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Text Element</h4>
+            </div>
+            <div class="modal-body col-sm-12">
+                <div id="showHeaderModal" class="col-sm-12">
+                    <div class="row form-group">
+                        <div class="col-sm-12">
+                            <label for="headerElementID" class="col-sm-12 control-label">Element ID:</label>
+                            <div class="col-sm-12">
+                                <input type="text" id="headerElementID" name="headerElementID" class="form-control">
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h5 class="addBold">Some Allowed Classes</h5>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="col-sm-8">
+                                <p class="possibleClasses">required</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-12">
+                            <label for="headerElementClasses" class="col-sm-12 control-label">Element Classes:</label>
+                            <div class="col-sm-12">
+                                <input type="text" id="headerElementClasses" name="headerElementClasses" class="form-control">
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+                    </div>
+                    <div class="row form-group labelRow">
+                        <div class="col-sm-12">
+                            <label for="headerElementLabelText" class="col-sm-12 control-label">Label Text:</label>
+                            <div class="col-sm-12">
+                                <input type="text" id="headerElementLabelText" name="headerElementLabelText" class="form-control">
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-12">
+                            <label for="elementTextType" class="col-sm-12 control-label">Element Text Type:</label>
+                            <div class="col-sm-12">
+                                <select id="elementTextType" name="elementTextType" class="form-control">
+                                    <option value='null' selected disabled>Select One</option>
+                                    <option value='h1'>H1</option>
+                                    <option value='h2'>H2</option>
+                                    <option value='h3'>H3</option>
+                                    <option value='h4'>H4</option>
+                                    <option value='h5'>H5</option>
+                                    <option value='p'>P</option>
+                                </select>
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-12">
+                            <label for="headerText" class="col-sm-12 control-label">Element Text:</label>
+                            <div class="col-sm-12">
+                                <input type="text" id="headerText" name="headerText" class="form-control">
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-warning" id="insertTextElement">Add Element</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form class="modal" data-backdrop="static" data-keyboard="false" id="add-submit-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Submit Element</h4>
+            </div>
+            <div class="modal-body col-sm-12">
+                <div id="showSubmitModal" class="col-sm-12">
+                    <div class="row form-group">
+                        <div class="col-sm-12">
+                            <label for="submitElementID" class="col-sm-12 control-label">Element ID:</label>
+                            <div class="col-sm-12">
+                                <input type="text" id="submitElementID" name="submitElementID" class="form-control">
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h5 class="addBold">Some Allowed Classes</h5>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="col-sm-8">
+                                <p class="possibleClasses">required</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-12">
+                            <label for="submitElementClasses" class="col-sm-12 control-label">Element Classes:</label>
+                            <div class="col-sm-12">
+                                <input type="text" id="submitElementClasses" name="submitElementClasses" class="form-control">
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+                    </div>
+                    <div class="row form-group labelRow">
+                        <div class="col-sm-12">
+                            <label for="submitElementLabelText" class="col-sm-12 control-label">Label Text:</label>
+                            <div class="col-sm-12">
+                                <input type="text" id="submitElementLabelText" name="submitElementLabelText" class="form-control">
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-12">
+                            <label for="submitValue" class="col-sm-12 control-label">Submit Value:</label>
+                            <div class="col-sm-12">
+                                <input type="text" id="submitValue" name="submitValue" class="form-control">
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-warning" id="insertSubmitElement">Add Element</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2 class="text-center">Form Builder</h2>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3 text form-horizontal">
+            <label class="col-sm-12 errorLabel"></label>
+            <label for="formName" class="col-sm-12 control-label" data-cols="2">Form Name:</label>
+            <div class="elementDiv col-sm-12" data-cols="10">
+                <input type="text" id="formName" name="formName" class="form-control required" value="" placeholder="Your Form Name">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid topMargin">
+    <div class="row">
+        <div class="col-sm-3">
+            <input type="button" id="addRowButton" class="btn btn-warning form-control" value="Add Row">
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div id="buildDiv" class="row">
+        <div class="fullRow">
+            <div class="controlRow col-sm-12">
+                <a class="column_move" href="#" title="Drag row to reorder"></a>
+                <span class="vc_row_layouts">
+                    <a class="set_columns one vc_active" data-cells="12" data-cells-mask="12" title="1/1"></a>
+                    <a class="set_columns two" data-cells="6_6" data-cells-mask="26" title="1/2 + 1/2"></a>
+                    <a class="set_columns three" data-cells="8_4" data-cells-mask="29" title="2/3 + 1/3"></a>
+                    <a class="set_columns four" data-cells="4_4_4" data-cells-mask="312" title="1/3 + 1/3 + 1/3"></a>
+                    <a class="set_columns five" data-cells="3_3_3_3" data-cells-mask="420" title="1/4 + 1/4 + 1/4 + 1/4"></a>
+                    <a class="set_columns six" data-cells="3_9" data-cells-mask="212" title="1/4 + 3/4"></a>
+                    <a class="set_columns seven" data-cells="3_6_3" data-cells-mask="313" title="1/4 + 1/2 + 1/4"></a>
+                    <a class="set_columns eight" data-cells="10_2" data-cells-mask="218" title="5/6 + 1/6"></a>
+                    <a class="set_columns nine" data-cells="2_2_2_2_2_2" data-cells-mask="642" title="1/6 + 1/6 + 1/6 + 1/6 + 1/6 + 1/6"></a>
+                    <a class="set_columns ten" data-cells="2_8_2" data-cells-mask="319" title="1/6 + 4/6 + 1/6"></a>
+                    <a class="set_columns eleven" data-cells="2_2_2_6" data-cells-mask="424" title="1/6 + 1/6 + 1/6 + 1/2"></a>
+                </span>
+                <span class="vc_row_edit_clone_delete">
+                    <a class="column_delete" href="#" title="Delete this row"></a>
+                    <a class="column_clone" href="#" title="Clone this row"></a>
+                    <a class="column_edit" href="#" title="Edit this row"></a>
+                </span>
+            </div>
+            <div class="col-sm-12 elementRow">
+                <div class="elementColumn col-sm-12" data-length="12">
+                    <div class="col-sm-12 topBar addElementRowDiv">
+                        <input class="addNewElementButton addElementTop" type="button">
+                    </div>
+                    <div class="col-sm-12 bottomBar addElementRowDiv">
+                        <input class="addNewElementButton addElementBottom" type='button'>
+                    </div>
+                    <div class="col-sm-12 elementContainer">
+                        <input type="button" class="btn addElement form-control" value="+ Element">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid bigTopMargin">
+    <div class="row">
+        <h2 class="text-center">Form Preview</h2>
+    </div>
+    <form id="fullPreview" class="row">
+    </form>
+</div>
+
+<div class="container-fluid bigTopMargin">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <input type="button" id="createForm" class="btn btn-success form-control" value="Download Files">
+        </div>
+    </div>
+</div>
+
+
+<script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/bootstrap.min.js" type="text/javascript"></script>
+<script src="js/jquery.maskedinput.min.js" type="text/javascript"></script>
+<script src="js/jquery.form.min.js" type="text/javascript"></script>
+<script src="js/eventHandlers.js" type="text/javascript"></script>
+<script src="js/main.js" type="text/javascript"></script>
+</body>
+
+</html>
