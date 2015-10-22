@@ -7,7 +7,7 @@ var position = null;
  *
  *******************************************/
 $(function() {
-    bindAddElementHandlers();
+    bindEventHandlers();
 });
 
 /********************************************
@@ -72,8 +72,7 @@ function insertElement(element){
                 $(row).remove();
                 break;
         }
-        bindAddElementHandlers();
-        addAdditionalElementButtons();
+        bindEventHandlers();
         $('.modal').modal('hide');
     }
 }
@@ -82,6 +81,7 @@ function insertElement(element){
 /********************************************
  *
  * Verifies Modal Data For Selected Element
+ * Creates and Appends Element
  *
  * @returns {boolean}
  *
@@ -273,7 +273,7 @@ function getSubmitElement(){
 
 /********************************************
  *
- * Generates Element String and Returns
+ * Generates Element HTML String
  *
  * @returns {string}
  *
@@ -315,7 +315,11 @@ function createSubmitInput(id, value, classes){
 }
 
 
-
+/********************************************
+ *
+ * Deletes empty table rows in select modal
+ *
+ *******************************************/
 function removeEmptyTableRows(){
     var tRow = $("#optionBody").find("tr");
     tRow.each(function(){
@@ -328,6 +332,11 @@ function removeEmptyTableRows(){
     }
 }
 
+/********************************************
+ *
+ * Deletes empty table rows in checkbox modal
+ *
+ *******************************************/
 function removeEmptyCheckboxRows(){
     var tRow = $("#checkboxBody").find("tr");
     tRow.each(function(){
@@ -340,6 +349,11 @@ function removeEmptyCheckboxRows(){
     }
 }
 
+/********************************************
+ *
+ * Deletes empty table rows in radio modal
+ *
+ *******************************************/
 function removeEmptyRadioRows(){
     var tRow = $("#radioBody").find("tr");
     tRow.each(function(){
@@ -352,6 +366,11 @@ function removeEmptyRadioRows(){
     }
 }
 
+/********************************************
+ *
+ * Checks that each table row in select modal is fully filled out
+ *
+ *******************************************/
 function checkTableRows(){
     var error = false;
     var tRow = $("#optionBody").find("tr");
@@ -370,6 +389,11 @@ function checkTableRows(){
     return error;
 }
 
+/********************************************
+ *
+ * Checks that each table row in checkbox modal is fully filled out
+ *
+ *******************************************/
 function checkboxRows(){
     var error = false;
     var tRow = $("#checkboxBody").find("tr");
@@ -393,6 +417,11 @@ function checkboxRows(){
     return error;
 }
 
+/********************************************
+ *
+ * Checks that each table row in radio modal is fully filled out
+ *
+ *******************************************/
 function radioRows(){
     var error = false;
     var tRow = $("#radioBody").find("tr");
@@ -416,6 +445,11 @@ function radioRows(){
     return error;
 }
 
+/********************************************
+ *
+ * Gets data from option table in select element modal
+ *
+ *******************************************/
 function getTableOptions(tbody){
     var optionData = '';
     var tRow = $(tbody).find("tr");
@@ -440,6 +474,11 @@ function getTableOptions(tbody){
     return optionData;
 }
 
+/********************************************
+ *
+ * Gets data from checkbox table in checkbox element modal
+ *
+ *******************************************/
 function getCheckboxData(tbody){
     var optionData = '';
     var tRow = $(tbody).find("tr");
@@ -456,6 +495,11 @@ function getCheckboxData(tbody){
     return optionData;
 }
 
+/********************************************
+ *
+ * Gets data from radio table in radio element modal
+ *
+ *******************************************/
 function getRadioData(tbody){
     var optionData = '';
     var tRow = $(tbody).find("tr");
@@ -472,23 +516,45 @@ function getRadioData(tbody){
     return optionData;
 }
 
+/********************************************
+ *
+ * Creates a empty row and appends it below
+ *
+ *******************************************/
 function addRow(){
     $('#buildDiv').append('<div class="fullRow"><div class="controlRow col-sm-12"><a class="column_move" href="#" title="Drag row to reorder"></a><span class="vc_row_layouts"><a class="set_columns one vc_active" data-cells="12" data-cells-mask="12" title="1/1"></a><a class="set_columns two" data-cells="6_6" data-cells-mask="26" title="1/2 + 1/2"></a><a class="set_columns three" data-cells="8_4" data-cells-mask="29" title="2/3 + 1/3"></a><a class="set_columns four" data-cells="4_4_4" data-cells-mask="312" title="1/3 + 1/3 + 1/3"></a><a class="set_columns five" data-cells="3_3_3_3" data-cells-mask="420" title="1/4 + 1/4 + 1/4 + 1/4"></a><a class="set_columns six" data-cells="3_9" data-cells-mask="212" title="1/4 + 3/4"></a><a class="set_columns seven" data-cells="3_6_3" data-cells-mask="313" title="1/4 + 1/2 + 1/4"></a><a class="set_columns eight" data-cells="10_2" data-cells-mask="218" title="5/6 + 1/6"></a><a class="set_columns nine" data-cells="2_2_2_2_2_2" data-cells-mask="642" title="1/6 + 1/6 + 1/6 + 1/6 + 1/6 + 1/6"></a><a class="set_columns ten" data-cells="2_8_2" data-cells-mask="319" title="1/6 + 4/6 + 1/6"></a><a class="set_columns eleven" data-cells="2_2_2_6" data-cells-mask="424" title="1/6 + 1/6 + 1/6 + 1/2"></a></span><span class="vc_row_edit_clone_delete"><a class="column_delete" href="#" title="Delete this row"></a><a class="column_clone" href="#" title="Clone this row"></a><a class="column_edit" href="#" title="Edit this row"></a></span></div><div class="col-sm-12 elementRow"><div class="elementColumn col-sm-12" data-length="12"><div class="col-sm-12 topBar addElementRowDiv"><input class="addNewElementButton addElementTop" type="button"></div><div class="col-sm-12 bottomBar addElementRowDiv"><input class="addNewElementButton addElementBottom" type="button"></div><div class="col-sm-12 elementContainer"><input type="button" class="btn addElement form-control" value="+ Element"></div></div></div></div>');
-    bindAddElementHandlers();
+    bindEventHandlers();
 }
 
+/********************************************
+ *
+ * Creates a empty row without a blank element and appends it below
+ *
+ *******************************************/
 function addEmptyRow(row){
     var $fullRow = $('<div class="fullRow"><div class="controlRow col-sm-12"><a class="column_move" href="#" title="Drag row to reorder"></a><span class="vc_row_layouts"><a class="set_columns one vc_active" data-cells="12" data-cells-mask="12" title="1/1"></a><a class="set_columns two" data-cells="6_6" data-cells-mask="26" title="1/2 + 1/2"></a><a class="set_columns three" data-cells="8_4" data-cells-mask="29" title="2/3 + 1/3"></a><a class="set_columns four" data-cells="4_4_4" data-cells-mask="312" title="1/3 + 1/3 + 1/3"></a><a class="set_columns five" data-cells="3_3_3_3" data-cells-mask="420" title="1/4 + 1/4 + 1/4 + 1/4"></a><a class="set_columns six" data-cells="3_9" data-cells-mask="212" title="1/4 + 3/4"></a><a class="set_columns seven" data-cells="3_6_3" data-cells-mask="313" title="1/4 + 1/2 + 1/4"></a><a class="set_columns eight" data-cells="10_2" data-cells-mask="218" title="5/6 + 1/6"></a><a class="set_columns nine" data-cells="2_2_2_2_2_2" data-cells-mask="642" title="1/6 + 1/6 + 1/6 + 1/6 + 1/6 + 1/6"></a><a class="set_columns ten" data-cells="2_8_2" data-cells-mask="319" title="1/6 + 4/6 + 1/6"></a><a class="set_columns eleven" data-cells="2_2_2_6" data-cells-mask="424" title="1/6 + 1/6 + 1/6 + 1/2"></a></span><span class="vc_row_edit_clone_delete"><a class="column_delete" href="#" title="Delete this row"></a><a class="column_clone" href="#" title="Clone this row"></a><a class="column_edit" href="#" title="Edit this row"></a></span></div><div class="col-sm-12 elementRow"><div class="elementColumn col-sm-12" data-length="12"><div class="col-sm-12 topBar addElementRowDiv"><input class="addNewElementButton addElementTop" type="button"></div><div class="col-sm-12 bottomBar addElementRowDiv"><input class="addNewElementButton addElementBottom" type="button"></div></div></div></div>');
     $(row).after($fullRow);
     return $fullRow;
 }
 
+/********************************************
+ *
+ * Clones the row and appends it below
+ *
+ *******************************************/
 function cloneRow(){
     var cloneRow = $(this).parents('.fullRow').clone();
     $(this).parents('.fullRow').after(cloneRow);
-    bindAddElementHandlers();
+    bindEventHandlers();
 }
 
+/********************************************
+ *
+ * Sets the size of row columns based on passed layout.
+ * Creates new rows if new column size cannot accommodate
+ * the amount of full columns.
+ *
+ *******************************************/
 function setRow(layout){
     var elements = $(layout).attr('data-cells').split('_');
     var totalElements = elements.length;
@@ -518,22 +584,38 @@ function setRow(layout){
             $(botRow).find('.elementColumn').addClass('full');
         }
     });
-    bindAddElementHandlers();
+    bindEventHandlers();
 }
 
+/********************************************
+ *
+ * Creates a clone of the element and appends it below
+ *
+ *******************************************/
 function cloneElement(){
     var element = $(this).parent().parent();
     var cElement = $(element).clone();
 
     $(element).after(cElement);
-    bindAddElementHandlers();
+    bindEventHandlers();
 }
 
+/********************************************
+ *
+ * Deletes element from column
+ *
+ *******************************************/
 function deleteElement(){
     $(this).parent().parent().remove();
     cleanUpElements();
 }
 
+/********************************************
+ *
+ * If container is empty adds blank element.
+ * Adds/removes class based on if container has a non-blank element
+ *
+ *******************************************/
 function cleanUpElements(){
     $('.elementColumn').each(function(){
         if($(this).children('.elementContainer').length == 0){
@@ -546,35 +628,14 @@ function cleanUpElements(){
             $(this).removeClass('full');
         }
     });
-    bindAddElementHandlers();
+    bindEventHandlers();
 }
 
-function setEditSelectTable(element){
-    var tbody = $('#editOptionBody');
-    tbody.empty();
-    $(element).children("option").each(function(){
-        var selected = '';
-        var disabled = '';
-
-        if($(this).attr('selected') == 'selected'){
-            selected = ' checked';
-        }
-        if($(this).attr('disabled') == 'disabled'){
-            disabled = ' checked';
-        }
-
-        tbody.append('<tr><td><button type="button" class="close form-control" aria-hidden="true">X</button></td><td><input type="text" class="form-control optionName" value="' + $(this).attr('name')  + '"></td><td><input type="text" class="form-control optionValue" value="' + $(this).val()  + '"></td><td><div class="row"><input type="checkbox" class="optionSelected"' + selected + '><label class="smallText">Selected</label></div><div class="row"><input type="checkbox" class="optionDisabled"' + disabled + '><label class="smallText">Disabled</label></div></td></tr>');
-    });
-    $('.close').off('click').on('click', deleteOptionRow);
-}
-
-function addAdditionalElementButtons(){
-    $(row).append("<div class='col-sm-12 topBar addElementRowDiv'><input class='addNewElementButton addElementTop' type='button'></div><div class='col-sm-12 bottomBar addElementRowDiv'><input class='addNewElementButton addElementBottom' type='button'></div>");
-
-    bindAddElementHandlers();
-}
-
-
+/********************************************
+ *
+ * Sets new element placement. Shows select element modal 
+ *
+ *******************************************/
 function insertEmptyElement(){
     if($(this).hasClass('addElementTop')){
         position = 'top';
@@ -589,6 +650,11 @@ function insertEmptyElement(){
     $('#select-element-modal').modal('show');
 }
 
+/********************************************
+ *
+ * Deletes row from option table. Adds row if no rows left from select modal
+ *
+ *******************************************/
 function deleteOptionRow(){
     var optionRow = $(this).parents('tr');
     if($(optionRow).parent().children('tr').length == 1){
@@ -597,7 +663,13 @@ function deleteOptionRow(){
     $(optionRow).remove();
 }
 
-
+/********************************************
+ *
+ * *****Will be replaced with a server call*****
+ *
+ * Creates the preview of the form and displays it
+ *
+ *******************************************/
 function createPreview(){
     var pElement = $('#buildDiv').clone();
     $(pElement).find('.controlRow').remove();
@@ -613,15 +685,88 @@ function createPreview(){
     $('#fullPreview').empty().append(pElement)
 }
 
+/********************************************
+ *
+ * Hides/shows element overlay based on mouseenter/mouseleave
+ *
+ *******************************************/
+function toggleOptionRow(){
+    $(this).children('.hiddenOptionRow').toggleClass('inline')
+}
 
+/********************************************
+ *
+ * Hides all modals then shows correct modal
+ *
+ *******************************************/
+function showCheckModal(){
+    $('.modal').modal('hide');
+    $('#add-checkbox-modal').modal('show');
+}
 
+function showRadioModal(){
+    $('.modal').modal('hide');
+    $('#add-radio-modal').modal('show');
+}
 
+function showSelectModal(){
+    $('.modal').modal('hide');
+    $('#add-select-modal').modal('show');
+}
 
+function showTextInputModal(){
+    $('.modal').modal('hide');
+    $('#add-text-input-modal').modal('show');
+}
 
+function showTextareaModal(){
+    $('.modal').modal('hide');
+    $('#add-textarea-modal').modal('show');
+}
 
+function showTextModal(){
+    $('.modal').modal('hide');
+    $('#add-text-modal').modal('show');
+}
 
+function showSubmitModal(){
+    $('.modal').modal('hide');
+    $('#add-submit-modal').modal('show');
+}
 
+/********************************************
+ *
+ * Shows/Hides column layouts on mouseover/mouseout
+ *
+ *******************************************/
+function showLayouts(){
+    $(this).children().css('display', 'inline-block');
+    $(this).parent().css('z-index', '9999');
+}
 
+function hideLayouts(){
+    $(this).children().not('vc_active').css('display', 'none');
+    $(this).parent().css('z-index', '10');
+}
+
+/********************************************
+ *
+ * Sets column layout image and sets row column widths
+ *
+ *******************************************/
+function setRowColumnSize(){
+    if(!$(this).hasClass('vc_active')){
+        $(this).parent().children('.set_columns').removeClass('vc_active');
+        $(this).addClass('vc_active');
+        setRow(this);
+    }
+}
+
+/********************************************
+ *
+ * Creates AJAX call to process form data on server
+ *
+ *******************************************/
 function createForm(){
     $('.subBtn').prop('disabled', true);
 
@@ -632,9 +777,13 @@ function createForm(){
         url : "php/createForm.php",
         dataType : "JSON"
     });
-    return false;
 }
 
+/********************************************
+ *
+ * Parses AJAX response from server
+ *
+ *******************************************/
 function showResponse(responseText)  {
     responseText = JSON.parse(responseText);
     if(responseText['success']){
@@ -646,11 +795,14 @@ function showResponse(responseText)  {
     $('.subBtn').prop('disabled', false);
 }
 
-
-
-
-
-
+/********************************************
+ *
+ * Loops through each row to create JSON string
+ * for serverside processing
+ *
+ * @returns {string}
+ *
+ *******************************************/
 function createSubmitData() {
     var data = {};
     data.rows = [];
@@ -685,6 +837,13 @@ function createSubmitData() {
     return JSON.stringify(data);
 }
 
+/********************************************
+ *
+ * Calls Function to Parse Element Based on Type
+ *
+ * @returns {object}
+ *
+ *******************************************/
 function getElementData(type, element){
     var data = null;
     switch(type) {
@@ -715,6 +874,13 @@ function getElementData(type, element){
     return data;
 }
 
+/********************************************
+ *
+ * Generates Objects Based On Element Type
+ *
+ * @returns {object}
+ *
+ *******************************************/
 function getTextInfo(element){
     var dataObj = {};
     var txtEle  = $(element).find('input[type=text]');

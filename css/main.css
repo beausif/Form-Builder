@@ -93,6 +93,18 @@ label {
 	margin: 0;
 }
 
+.inline {
+    display: inline-block!important;
+}
+
+.vc_layout {
+
+}
+
+.vc_layout_hide {
+    
+}
+
 .inputColor {
 	background-color: #efefef;
 }
