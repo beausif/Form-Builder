@@ -98,11 +98,11 @@ label {
 }
 
 .vc_layout {
-
+    display: inline-block;
 }
 
 .vc_layout_hide {
-    
+
 }
 
 .inputColor {
@@ -241,7 +241,7 @@ th, td {
 }
 
 .column_move {
-    background: url(../images/drag_handler.gif) no-repeat center center;
+    background: url(../images/drag_handler1.png) no-repeat center center;
     cursor: move;
     float: left;
 }
@@ -379,12 +379,17 @@ input[type=checkbox], input[type=radio]{
     margin-left: 0!important;
 }
 
+.addElement {
+    font-weight: bold!important;
+    font-size: 20px!important;
+}
+
 .addNewElementButton {
     z-index: 99999;
     margin: 0 auto;
     display: block;
     position: relative;
-    background: url(../images/add_grey.png) no-repeat center center;
+    background: url(../images/add_grey1.png) no-repeat center center;
     border: none;
     padding: 0 10px;
 }
@@ -398,63 +403,63 @@ input[type=checkbox], input[type=radio]{
 }
 
 .one {
-    background-image:url(../images/1.gif);
+    background-image:url(../images/1.png);
 }
 
 .two {
-    background-image:url(../images/2.gif);
+    background-image:url(../images/2.png);
 }
 
 .three {
-    background-image:url(../images/3.gif);
+    background-image:url(../images/3.png);
 }
 
 .four {
-    background-image:url(../images/4.gif);
+    background-image:url(../images/4.png);
 }
 
 .five {
-    background-image:url(../images/5.gif);
+    background-image:url(../images/5.png);
 }
 
 .six {
-    background-image:url(../images/6.gif);
+    background-image:url(../images/6.png);
 }
 
 .seven {
-    background-image:url(../images/7.gif);
+    background-image:url(../images/7.png);
 }
 
 .eight {
-    background-image:url(../images/8.gif);
+    background-image:url(../images/8.png);
 }
 
 .nine {
-    background-image:url(../images/9.gif);
+    background-image:url(../images/9.png);
 }
 
 .ten {
-    background-image:url(../images/10.gif);
+    background-image:url(../images/10.png);
 }
 
 .eleven {
-    background-image:url(../images/11.gif);
+    background-image:url(../images/11.png);
 }
 
 .column_edit {
-    background:url(../images/edit_grey.png) no-repeat center center;
+    background:url(../images/edit_grey1.png) no-repeat center center;
     float: right;
     margin-left: 1px;
 }
 
 .column_clone {
-    background:url(../images/row_clone.png) no-repeat center center;
+    background:url(../images/row_clone1.png) no-repeat center center;
     float: right;
     margin-left: 1px;
 }
 
 .column_delete {
-    background:url(../images/row_remove.png) no-repeat center center;
+    background:url(../images/row_remove1.png) no-repeat center center;
     float: right;
     margin-left: 1px;
 }
@@ -464,9 +469,9 @@ input[type=checkbox], input[type=radio]{
 }
 
 .clone_element {
-    background:url(../images/clone.gif) no-repeat center center;
+    background:url(../images/clone1.png) no-repeat center center;
 }
 
 .delete_element {
-    background:url(../images/remove.png) no-repeat center center;
+    background:url(../images/remove1.png) no-repeat center center;
 }

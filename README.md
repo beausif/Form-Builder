@@ -16,6 +16,8 @@ Currently on submission only the HTML is generated. The PHP, JS, and CSS still n
 - [ ] Automate generation of PHP
 - [ ] Automate generation of JS
 - [ ] Automate generation of CSS
+- [ ] Add option for form submission by mail, db, or both
+- [ ] Add more element functionality such as tables, anchors, images, and file input
 - [ ] Move modal html to server-side
 - [ ] Standardize commenting
 - [ ] Minimize dependencies
