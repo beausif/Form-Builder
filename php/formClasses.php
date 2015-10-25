@@ -233,7 +233,7 @@ class Text_Input {
 						</div>";
 	}
 
-	private function is_required(){
+	public function is_required(){
 		$class_list = explode(' ', $this->classes);
 
 		foreach($class_list as $class){
@@ -244,10 +244,9 @@ class Text_Input {
 						}
 
 						";
-			} else {
-				return "";
 			}
 		}
+		return "";
 	}
 
 }
@@ -297,7 +296,7 @@ class Select_Input {
 		return $options_html;
 	}
 
-	private function is_required(){
+	public function is_required(){
 		$class_list = explode(' ', $this->classes);
 
 		foreach($class_list as $class){
@@ -308,10 +307,9 @@ class Select_Input {
 						}
 
 						";
-			} else {
-				return "";
 			}
 		}
+		return "";
 	}
 }
 
@@ -352,7 +350,7 @@ class Checkbox_Input {
 		return $checkboxes_html;
 	}
 
-	private function is_required(){
+	public function is_required(){
 		$class_list = explode(' ', $this->classes);
 
 		foreach($class_list as $class){
@@ -363,10 +361,9 @@ class Checkbox_Input {
 						}
 
 						";
-			} else {
-				return "";
 			}
 		}
+		return "";
 	}
 }
 
@@ -407,7 +404,7 @@ class Radio_Input {
 		return $radios_html;
 	}
 
-	private function is_required(){
+	public function is_required(){
 		$class_list = explode(' ', $this->classes);
 
 		foreach($class_list as $class){
@@ -418,10 +415,9 @@ class Radio_Input {
 						}
 
 						";
-			} else {
-				return "";
 			}
 		}
+		return "";
 	}
 }
 
@@ -454,7 +450,7 @@ class Textarea_Input {
 						</div>";
 	}
 
-	private function is_required(){
+	public function is_required(){
 		$class_list = explode(' ', $this->classes);
 
 		foreach($class_list as $class){
@@ -465,10 +461,9 @@ class Textarea_Input {
 						}
 
 						";
-			} else {
-				return "";
 			}
 		}
+		return "";
 	}
 
 }
@@ -500,7 +495,7 @@ class Text_Element {
 						</div>";
 	}
 
-	private function is_required(){
+	public function is_required(){
 		$class_list = explode(' ', $this->classes);
 
 		foreach($class_list as $class){
@@ -511,10 +506,9 @@ class Text_Element {
 						}
 
 						";
-			} else {
-				return "";
 			}
 		}
+		return "";
 	}
 }
 
@@ -539,7 +533,7 @@ class Submit_Element {
 						</div>";
 	}
 
-	private function is_required(){
+	public function is_required(){
 		$class_list = explode(' ', $this->classes);
 
 		foreach($class_list as $class){
@@ -550,10 +544,9 @@ class Submit_Element {
 						}
 
 						";
-			} else {
-				return "";
 			}
 		}
+		return "";
 	}
 }
 
