@@ -13,7 +13,7 @@ class Form {
 
 	public function __construct($data){
 		$this->data = $data;
-		$this->form_js = create_js();
+		$this->form_js = $this->create_js();
 		$this->create_form();
 	}
 
