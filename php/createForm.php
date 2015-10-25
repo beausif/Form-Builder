@@ -14,5 +14,6 @@ $form_data = $form_data->rows;
 
 $form = new Form($form_data);
 echo $form->get_html();
+echo $form->get_js();
 
 ?>

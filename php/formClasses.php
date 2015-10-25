@@ -5,9 +5,15 @@ class Form {
 
 	private $data;
 	private $form_html;
+	private $form_js;
+	private $form_js_required;
+	private $form_css;
+	private $form_php;
+
 
 	public function __construct($data){
 		$this->data = $data;
+		$this->form_js = create_js();
 		$this->create_form();
 	}
 
@@ -18,13 +24,130 @@ class Form {
 				$this->form_html .= $this->start_container_html($containers->len);
 				foreach($containers->containers as $element){
 					if($element->data !== null){
-						$this->form_html .= $this->select_type($element);
+						$element_class = $this->select_type($element);
+						$this->form_html .= $element_class->html;
 					}
 				}
 				$this->form_html .= $this->end_div_html();
 			}
 			$this->form_html .= $this->end_div_html();
 		}
+	}
+
+	private function create_js(){
+		return "
+				(function($) {
+					$(function() {
+						setEvents();
+					});
+					
+					function setEvents(){
+						$('#fb-form').on('submit', function(e) {
+							var event = e.originalEvent;
+							event.preventDefault ? e.preventDefault() : event.returnValue = false;
+							$(this).ajaxSubmit({
+								beforeSubmit:  showRequest,
+								success:       showResponse,
+								error:		   showError
+							});
+							return false;
+						});
+
+						$('input, select').off('keydown');
+						
+						$('input, select').on('keydown', function(e) {
+							if (e.keyCode == 13) {
+								return false;
+							}
+						});
+					}
+
+					function showRequest(formData, jqForm, options){
+						resetErrors();
+						var noError = true;
+						$('input[type=submit]').prop('disabled', true);
+
+						" +
+
+						$this->form_js_required
+						
+						+ "
+
+						if(noError){
+							createMessage('success', 'Please wait form is being submitted');
+						} else {
+							$('input[type=submit]').prop('disabled', false);
+						}
+						return noError;
+					}
+
+					function showResponse(response, status, xhr, $form){
+						response = JSON.parse(response);
+						if(response.success){
+							$('#fb-form')[0].reset();
+							createMessage('success', response.text);
+						} else {
+							createMessage('error', response.text);
+						}
+						$('input[type=submit]').prop('disabled', false);
+					}
+
+					function showError(jqXHR, textStatus, errorThrown) {
+						$('input[type=submit]').prop('disabled', false);
+						createMessage('error', 'Problem submitting the form : ' +  jqXHR + ' | ' + textStatus + ' | ' + errorThrown);
+					}
+
+					function resetErrors(){
+						$('.errorLabel').text('');
+						$('.errorBorder').removeClass('errorBorder');
+					}
+
+					function checkInput(input, error){
+						var errors = false;
+						$(input).each(function(index, element){
+							if($.trim($(element).val()) == ''){
+								errors = true;
+								$(element).addClass('errorBorder');
+								$(element).parent().next('.errorLabel').text(error);
+							}
+						});
+						return errors;
+					}
+
+					function setError(response){
+						if(typeof response == 'string'){
+							createMessage('error', response);
+						} else {
+							createMessage('error', 'Unknown Error Occured')
+						}
+					}
+
+					function createMessage(type, message){
+						var alert_type = null;
+						var alert_msg = null;
+						var html = null;
+						if(type == 'success'){
+							alert_type = 'success';
+							alert_msg = Success!;
+						} else {
+							alert_type = 'danger';
+							alert_msg = Error!;
+						}
+
+						html = ' \
+						<div class=\'col-sm-6 col-sm-offset-3\'> \
+							<div class=\'alert alert-\' + alert_type + \'fade in\'> \
+								<a href=\'#\' class=\'close\' data-dismiss=\'alert\' aria-label=\'close\'>&times;</a> \
+								<strong>\' + alert_msg + \' </strong><p class=\'inline-text\'>\' + message + \'<p> \
+							</div> \
+						</div>';
+
+
+						$('message-div').html(html);
+						window.scrollTo(0,0);
+					}
+
+				})( jQuery );";
 	}
 
 	private function start_row_html(){
@@ -67,11 +190,15 @@ class Form {
 	        default:
 	            return null;
 	    }
-	    return $e->html;
+	    return $e;
 	}
 
 	public function get_html(){
 		return $this->form_html;
+	}
+
+	public function get_js(){
+		return $this->form_js;
 	}
 }
 
@@ -103,6 +230,10 @@ class Text_Input {
 							</div>
 							<label class='col-sm-12 errorLabel'></label>
 						</div>";
+	}
+
+	private function is_required(){
+
 	}
 
 }
@@ -309,6 +440,5 @@ class Submit_Element {
 						</div>";
 	}
 }
-
 
 ?>

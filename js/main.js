@@ -994,7 +994,7 @@ function getSubmitInfo(element){
 
     dataObj.id          = $(submit).attr('id');
     dataObj.classes     = $(submit).attr('class');
-    dataObj.value         = $(submit).val();
+    dataObj.value       = $(submit).val();
 
     return dataObj;
 }
