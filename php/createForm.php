@@ -16,4 +16,7 @@ $form = new Form($form_data);
 echo $form->get_html();
 echo $form->get_js();
 
+file_put_contents("../temp/index.html", $form->get_html());
+file_put_contents("../temp/js/main.js", $form->get_js());
+
 ?>

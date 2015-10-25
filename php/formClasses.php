@@ -18,6 +18,7 @@ class Form {
 	}
 
 	private function create_form(){
+		$this->form_html .= $this->start_html();
 		foreach($this->data as $row){
 			$this->form_html .= $this->start_row_html();
 			foreach($row->row as $containers){
@@ -33,122 +34,148 @@ class Form {
 			}
 			$this->form_html .= $this->end_div_html();
 		}
+		$this->form_html .= $this->end_html();
 	}
 
 	private function create_js(){
-		return "
-				(function($) {
-					$(function() {
-						setEvents();
-					});
-					
-					function setEvents(){
-						$('#fb-form').on('submit', function(e) {
-							var event = e.originalEvent;
-							event.preventDefault ? e.preventDefault() : event.returnValue = false;
-							$(this).ajaxSubmit({
-								beforeSubmit:  showRequest,
-								success:       showResponse,
-								error:		   showError
-							});
-							return false;
-						});
+		return 
 
-						$('input, select').off('keydown');
-						
-						$('input, select').on('keydown', function(e) {
-							if (e.keyCode == 13) {
-								return false;
-							}
-						});
-					}
+"(function($) {
+	$(function() {
+		setEvents();
+	});
+	
+	function setEvents(){
+		$('#fb-form').on('submit', function(e) {
+			var event = e.originalEvent;
+			event.preventDefault ? e.preventDefault() : event.returnValue = false;
+			$(this).ajaxSubmit({
+				beforeSubmit:  showRequest,
+				success:       showResponse,
+				error:		   showError
+			});
+			return false;
+		});
 
-					function showRequest(formData, jqForm, options){
-						resetErrors();
-						var noError = true;
-						$('input[type=submit]').prop('disabled', true);
+		$('input, select').off('keydown');
+		
+		$('input, select').on('keydown', function(e) {
+			if (e.keyCode == 13) {
+				return false;
+			}
+		});
+	}
 
-						" .
+	function showRequest(formData, jqForm, options){
+		resetErrors();
+		var noError = true;
+		$('input[type=submit]').prop('disabled', true);
 
-						$this->form_js_required
-						
-						. "
+		" .
 
-						if(noError){
-							createMessage('success', 'Please wait form is being submitted');
-						} else {
-							$('input[type=submit]').prop('disabled', false);
-						}
-						return noError;
-					}
+		$this->form_js_required
+		
+		. "
 
-					function showResponse(response, status, xhr, \$form){
-						response = JSON.parse(response);
-						if(response.success){
-							$('#fb-form')[0].reset();
-							createMessage('success', response.text);
-						} else {
-							createMessage('error', response.text);
-						}
-						$('input[type=submit]').prop('disabled', false);
-					}
+		if(noError){
+			createMessage('success', 'Please wait form is being submitted');
+		} else {
+			$('input[type=submit]').prop('disabled', false);
+		}
+		return noError;
+	}
 
-					function showError(jqXHR, textStatus, errorThrown) {
-						$('input[type=submit]').prop('disabled', false);
-						createMessage('error', 'Problem submitting the form : ' +  jqXHR + ' | ' + textStatus + ' | ' + errorThrown);
-					}
+	function showResponse(response, status, xhr, \$form){
+		response = JSON.parse(response);
+		if(response.success){
+			$('#fb-form')[0].reset();
+			createMessage('success', response.text);
+		} else {
+			createMessage('error', response.text);
+		}
+		$('input[type=submit]').prop('disabled', false);
+	}
 
-					function resetErrors(){
-						$('.errorLabel').text('');
-						$('.errorBorder').removeClass('errorBorder');
-					}
+	function showError(jqXHR, textStatus, errorThrown) {
+		$('input[type=submit]').prop('disabled', false);
+		createMessage('error', 'Problem submitting the form : ' +  jqXHR + ' | ' + textStatus + ' | ' + errorThrown);
+	}
 
-					function checkInput(input, error){
-						var errors = false;
-						$(input).each(function(index, element){
-							if($.trim($(element).val()) == ''){
-								errors = true;
-								$(element).addClass('errorBorder');
-								$(element).parent().next('.errorLabel').text(error);
-							}
-						});
-						return errors;
-					}
+	function resetErrors(){
+		$('.errorLabel').text('');
+		$('.errorBorder').removeClass('errorBorder');
+	}
 
-					function setError(response){
-						if(typeof response == 'string'){
-							createMessage('error', response);
-						} else {
-							createMessage('error', 'Unknown Error Occured')
-						}
-					}
+	function checkInput(input, error){
+		var errors = false;
+		$(input).each(function(index, element){
+			if($.trim($(element).val()) == ''){
+				errors = true;
+				$(element).addClass('errorBorder');
+				$(element).parent().next('.errorLabel').text(error);
+			}
+		});
+		return errors;
+	}
 
-					function createMessage(type, message){
-						var alert_type = null;
-						var alert_msg = null;
-						var html = null;
-						if(type == 'success'){
-							alert_type = 'success';
-							alert_msg = Success!;
-						} else {
-							alert_type = 'danger';
-							alert_msg = Error!;
-						}
+	function setError(response){
+		if(typeof response == 'string'){
+			createMessage('error', response);
+		} else {
+			createMessage('error', 'Unknown Error Occured')
+		}
+	}
 
-						html = ' \
-						<div class=\'col-sm-6 col-sm-offset-3\'> \
-							<div class=\'alert alert-\' + alert_type + \'fade in\'> \
-								<a href=\'#\' class=\'close\' data-dismiss=\'alert\' aria-label=\'close\'>&times;</a> \
-								<strong>\' + alert_msg + \' </strong><p class=\'inline-text\'>\' + message + \'<p> \
-							</div> \
-						</div>';
+	function createMessage(type, message){
+		var alert_type = null;
+		var alert_msg = null;
+		var html = null;
+		if(type == 'success'){
+			alert_type = 'success';
+			alert_msg = 'Success!';
+		} else {
+			alert_type = 'danger';
+			alert_msg = 'Error!';
+		}
+
+		html = ' \
+		<div class=\'col-sm-6 col-sm-offset-3\'> \
+			<div class=\'alert alert-\' + alert_type + \'fade in\'> \
+				<a href=\'#\' class=\'close\' data-dismiss=\'alert\' aria-label=\'close\'>&times;</a> \
+				<strong>\' + alert_msg + \' </strong><p class=\'inline-text\'>\' + message + \'<p> \
+			</div> \
+		</div>';
 
 
-						$('message-div').html(html);
-						window.scrollTo(0,0);
-					}
+		$('message-div').html(html);
+		window.scrollTo(0,0);
+	}
 
-				})( jQuery );";
+})( jQuery );";
+	}
+	
+	private function start_html(){
+		return
+"<!DOCTYPE html>
+	<head>
+		<link href='css/bootstrap.min.css' rel='stylesheet'>
+		<link href='css/main.css' rel='stylesheet'>
+	</head>
+	<body>
+		<form id='fb-form'>
+";
+	}
+	
+	private function end_html(){
+		return
+"
+		</form>
+		<script src='js/jquery-1.11.3.min.js'></script>
+		<script src='js/jquery.form.min.js'></script>
+		<script src='js/main.js'></script>
+		<script src='js/bootstrap.min.js'></script>
+	</body>
+</html>";	
 	}
 
 	private function start_row_html(){
@@ -238,12 +265,11 @@ class Text_Input {
 
 		foreach($class_list as $class){
 			if($class == 'required'){
-				return "
-						if(checkInput('#{$this->id}', 'Required Input')){
-							noError = false;
-						}
-
-						";
+				return 		
+		"if(checkInput('#{$this->id}', 'Required Input')){
+			noError = false;
+		}
+		";
 			}
 		}
 		return "";
@@ -301,12 +327,11 @@ class Select_Input {
 
 		foreach($class_list as $class){
 			if($class == 'required'){
-				return "
-						if(checkInput('#{$this->id}', 'Required Input')){
-							noError = false;
-						}
-
-						";
+				return
+		"if(checkInput('#{$this->id}', 'Required Input')){
+			noError = false;
+		}
+		";
 			}
 		}
 		return "";
@@ -355,12 +380,11 @@ class Checkbox_Input {
 
 		foreach($class_list as $class){
 			if($class == 'required'){
-				return "
-						if(checkInput('#{$this->id}', 'Required Input')){
-							noError = false;
-						}
-
-						";
+				return 
+		"if(checkInput('#{$this->id}', 'Required Input')){
+			noError = false;
+		}
+		";
 			}
 		}
 		return "";
@@ -409,12 +433,11 @@ class Radio_Input {
 
 		foreach($class_list as $class){
 			if($class == 'required'){
-				return "
-						if(checkInput('#{$this->id}', 'Required Input')){
-							noError = false;
-						}
-
-						";
+				return 
+		"if(checkInput('#{$this->id}', 'Required Input')){
+			noError = false;
+		}
+		";
 			}
 		}
 		return "";
@@ -455,12 +478,11 @@ class Textarea_Input {
 
 		foreach($class_list as $class){
 			if($class == 'required'){
-				return "
-						if(checkInput('#{$this->id}', 'Required Input')){
-							noError = false;
-						}
-
-						";
+				return 
+		"if(checkInput('#{$this->id}', 'Required Input')){
+			noError = false;
+		}
+		";
 			}
 		}
 		return "";
@@ -500,12 +522,11 @@ class Text_Element {
 
 		foreach($class_list as $class){
 			if($class == 'required'){
-				return "
-						if(checkInput('#{$this->id}', 'Required Input')){
-							noError = false;
-						}
-
-						";
+				return 
+		"if(checkInput('#{$this->id}', 'Required Input')){
+			noError = false;
+		}
+		";
 			}
 		}
 		return "";
@@ -515,7 +536,7 @@ class Text_Element {
 class Submit_Element {
 	private $id;
 	private $classes;
-	private $val;
+	private $value;
 	public  $html;
 
 	public function __construct($data){
@@ -529,7 +550,7 @@ class Submit_Element {
 	private function create_element(){
 		$this->html = "
 						<div class='col-sm-12 form-horizontal'>
-							<input type='submit' id='{$this->id}' name='{$this->id}' class='{$this->classes}' value='{$this->val}'>
+							<input type='submit' id='{$this->id}' name='{$this->id}' class='{$this->classes}' value='{$this->value}'>
 						</div>";
 	}
 
@@ -538,12 +559,11 @@ class Submit_Element {
 
 		foreach($class_list as $class){
 			if($class == 'required'){
-				return "
-						if(checkInput('#{$this->id}', 'Required Input')){
-							noError = false;
-						}
-
-						";
+				return 
+		"if(checkInput('#{$this->id}', 'Required Input')){
+			noError = false;
+		}
+		";
 			}
 		}
 		return "";

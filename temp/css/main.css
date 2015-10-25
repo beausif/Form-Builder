@@ -1,0 +1,478 @@
+body {
+	background-color: #D0D0CE!important;
+}
+
+html {
+    overflow-x: hidden;
+}
+
+.selectElementButton {
+    height: 80px;
+    width: 125px;
+    margin: 15px;
+}
+
+.defloat {
+	float:none;
+}
+
+.addBold {
+	font-weight: bold;
+}
+
+.radioButton {
+    margin-bottom: 15px!important;
+    margin-right: 10px!important;
+}
+
+.noDisc {
+	list-style-type: none!important;
+	padding-left: 0!important;
+	margin-left: 0!important;
+}
+
+.bigTopMargin {
+    margin-top: 200px;
+    margin-bottom: 200px;
+}
+
+textarea {
+	vertical-align: middle;
+}
+
+.possibleClasses {
+    border-radius: 25px;
+    border: 2px solid #8AC007;
+    display: inline-block;
+    padding: 5px;
+    font-size: 10px;
+}
+
+.control-label {
+    text-align: left!important;
+}
+
+ol li {
+	padding-bottom: .5%;
+}
+
+.addBorder {
+	border: 1px black solid;
+}
+
+.topMargin {
+	margin-top: 50px;
+}
+
+.alignRight {
+	text-align: right;
+}
+
+.alignLeft {
+	text-align: left;
+}
+
+label {
+	text-align: right;
+}
+
+.floatRight {
+	float: right;
+}
+
+.leftMargin {
+	margin-left: 2%;
+}
+
+.stepClass {
+	background-color:black;
+	color: white;
+}
+
+.removeMargin {
+	margin: 0;
+}
+
+.inline {
+    display: inline-block!important;
+}
+
+.vc_layout {
+    display: inline-block;
+}
+
+.vc_layout_hide {
+
+}
+
+.inputColor {
+	background-color: #efefef;
+}
+
+.container-wrap {
+	padding-bottom: 0!important;
+}
+
+.close {
+    color: red!important;
+    opacity: 1 !important;
+    -webkit-box-shadow: none!important;
+    box-shadow:  none!important;
+}
+
+.table {
+    margin-bottom: 10px!important;
+}
+
+.subBtn {
+	width: 100%!important;
+	background-color: #FFC72C!important;
+	padding: 10px 16px!important;
+	font-size: 18px!important;
+	line-height: 1.33!important;
+	border-radius: 6px!important;
+}
+
+.removePadding {
+	padding: 0!important;
+}
+
+.form-messages {
+	font-size: 2em;
+	color: blue;
+	border: 5px red solid;
+	text-align: center;
+	display: none;
+}
+
+.smallText {
+    font-size: 10px!important;
+}
+
+.alignCenter {
+	text-align: center!important;
+}
+
+.errorBorder {
+    border: 1px solid red!important;
+}
+
+.errorLabel {
+    color: red!important;
+    min-height: 20px!important;
+	text-align: left!important;
+}
+
+.btn-file {
+	position: relative;
+	overflow: hidden;
+}
+.btn-file input[type=file] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	min-width: 100%;
+	min-height: 100%;
+	font-size: 100px;
+	text-align: right;
+	filter: alpha(opacity=0);
+	opacity: 0;
+	background: red;
+	cursor: inherit;
+	display: block;
+}
+input[readonly] {
+	background-color: white !important;
+	cursor: text !important;
+}
+
+.column_delete, .column_clone, .column_edit {
+    float: right;
+}
+
+.halfWidth {
+	width: 40%!important;
+	float: left;
+	text-align: center;
+	margin-right: 2.5%;
+}
+
+.btnClass {
+	width: 15%!important;
+	float: left;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table, th, td {
+	border: 1px solid black;
+	text-align: center!important;
+}
+
+.dateDiv {
+	margin-top: 5%;
+	margin-bottom: 15%!important;
+}
+
+th {
+	font-weight: bold;
+}
+
+th, td {
+	padding: 10px;
+}
+
+.fullRow {
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.controlRow{
+    text-align: center;
+    line-height: 1px;
+    position: relative;
+    z-index: 10;
+    top: 3px;
+}
+
+.control-label {
+    clear: left;
+}
+
+.column_move {
+    background: url(../images/drag_handler1.png) no-repeat center center;
+    cursor: move;
+    float: left;
+}
+
+.vc_row_layouts {
+    display: block;
+    overflow: hidden;
+    position: absolute;
+    padding-bottom: 6px;
+    left: 65px;
+    text-align: left;
+    background: whitesmoke;
+    border: 1px solid #FBEED5;
+    border-radius: 3px 3px 3px 3px;
+}
+
+.vc_row_layouts:hover {
+    z-index: 2000;
+    width: auto;
+    height: auto;
+    max-width: 205px;
+}
+
+.controlRow a {
+    display: inline-block;
+    background-color: whitesmoke;
+    border-radius: 3px 3px 0 0;
+    border: solid #ECECEC;
+    border-width: 1px 1px 0 1px;
+    padding: 0 15px;
+    width: 16px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.vc_active {
+    display: inline-block!important;
+}
+
+.vc_row_layouts a {
+    display: none;
+    border: none;
+    background-color: transparent;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+
+.set_columns {
+    background: url(../images/1.gif) no-repeat center center;
+    width: 23px;
+    margin-bottom: 2px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.custom_columns {
+    background-image: none;
+    border-bottom: 1px dotted;
+    font-size: 11px;
+    height: auto;
+    line-height: 12px;
+    margin: 0 3px;
+    padding: 4px 0 0 0;
+    width: auto;
+}
+
+.elementColumn {
+    background-color: whitesmoke;
+    background-clip: content-box;
+    min-height: 70px!important;
+    z-index: 999;
+}
+
+.elementRow {
+    padding: 0!important;
+}
+
+.addElement {
+    height: 40px!important;
+    background-color: powderblue!important;
+    margin-top: 15px!important;
+    width: 90%!important;
+    margin-left: 5%!important;
+}
+
+.elementContainer{
+    background-color:white;
+    padding-bottom: 20px!important;
+    margin: 10px 0;
+}
+
+.hiddenOptionRow {
+    position: absolute;
+    right: 0;
+    display: none;
+    z-index: 99999;
+}
+
+.hiddenOptionButton {
+    margin: 2px;
+    border: none;
+    padding: 4px 15px;
+}
+
+.hiddenOptionButton:hover {
+    opacity: 0.3;
+}
+
+.elementDiv .btn {
+    margin-top: 20px;
+}
+
+.checkbox label {
+    font-weight: bold!important;
+}
+
+.radio label {
+    font-weight: bold!important;
+}
+
+label {
+    font-weight: bold!important;
+}
+
+.radio {
+    margin: 0!important;
+}
+
+input[type=checkbox], input[type=radio]{
+    -webkit-box-shadow: none!important;
+    box-shadow: none!important;
+    position: relative!important;
+    margin-left: 0!important;
+}
+
+.addElement {
+    font-weight: bold!important;
+    font-size: 20px!important;
+}
+
+.addNewElementButton {
+    z-index: 99999;
+    margin: 0 auto;
+    display: block;
+    position: relative;
+    background: url(../images/add_grey1.png) no-repeat center center;
+    border: none;
+    padding: 0 10px;
+}
+
+.bottomBar {
+    bottom: 0;
+}
+
+.addElementRowDiv {
+    position: absolute!important;
+}
+
+.one {
+    background-image:url(../images/1.png);
+}
+
+.two {
+    background-image:url(../images/2.png);
+}
+
+.three {
+    background-image:url(../images/3.png);
+}
+
+.four {
+    background-image:url(../images/4.png);
+}
+
+.five {
+    background-image:url(../images/5.png);
+}
+
+.six {
+    background-image:url(../images/6.png);
+}
+
+.seven {
+    background-image:url(../images/7.png);
+}
+
+.eight {
+    background-image:url(../images/8.png);
+}
+
+.nine {
+    background-image:url(../images/9.png);
+}
+
+.ten {
+    background-image:url(../images/10.png);
+}
+
+.eleven {
+    background-image:url(../images/11.png);
+}
+
+.column_edit {
+    background:url(../images/edit_grey1.png) no-repeat center center;
+    float: right;
+    margin-left: 1px;
+}
+
+.column_clone {
+    background:url(../images/row_clone1.png) no-repeat center center;
+    float: right;
+    margin-left: 1px;
+}
+
+.column_delete {
+    background:url(../images/row_remove1.png) no-repeat center center;
+    float: right;
+    margin-left: 1px;
+}
+
+.edit_element {
+    background:url(../images/edit.png) no-repeat center center;
+}
+
+.clone_element {
+    background:url(../images/clone1.png) no-repeat center center;
+}
+
+.delete_element {
+    background:url(../images/remove1.png) no-repeat center center;
+}
