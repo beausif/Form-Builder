@@ -13,8 +13,8 @@ class Form {
 
 	public function __construct($data){
 		$this->data = $data;
-		$this->form_js = $this->create_js();
 		$this->create_form();
+		$this->form_js = $this->create_js();
 	}
 
 	private function create_form(){
@@ -26,6 +26,7 @@ class Form {
 					if($element->data !== null){
 						$element_class = $this->select_type($element);
 						$this->form_html .= $element_class->html;
+						$this->form_js_required .= $element_class->is_required();
 					}
 				}
 				$this->form_html .= $this->end_div_html();
@@ -67,11 +68,11 @@ class Form {
 						var noError = true;
 						$('input[type=submit]').prop('disabled', true);
 
-						" +
+						" .
 
 						$this->form_js_required
 						
-						+ "
+						. "
 
 						if(noError){
 							createMessage('success', 'Please wait form is being submitted');
@@ -81,7 +82,7 @@ class Form {
 						return noError;
 					}
 
-					function showResponse(response, status, xhr, $form){
+					function showResponse(response, status, xhr, \$form){
 						response = JSON.parse(response);
 						if(response.success){
 							$('#fb-form')[0].reset();
@@ -233,7 +234,20 @@ class Text_Input {
 	}
 
 	private function is_required(){
+		$class_list = explode(' ', $this->classes);
 
+		foreach($class_list as $class){
+			if($class == 'required'){
+				return "
+						if(checkInput('#{$this->id}', 'Required Input')){
+							noError = false;
+						}
+
+						";
+			} else {
+				return "";
+			}
+		}
 	}
 
 }
@@ -282,6 +296,23 @@ class Select_Input {
 
 		return $options_html;
 	}
+
+	private function is_required(){
+		$class_list = explode(' ', $this->classes);
+
+		foreach($class_list as $class){
+			if($class == 'required'){
+				return "
+						if(checkInput('#{$this->id}', 'Required Input')){
+							noError = false;
+						}
+
+						";
+			} else {
+				return "";
+			}
+		}
+	}
 }
 
 class Checkbox_Input {
@@ -319,6 +350,23 @@ class Checkbox_Input {
 		}
 
 		return $checkboxes_html;
+	}
+
+	private function is_required(){
+		$class_list = explode(' ', $this->classes);
+
+		foreach($class_list as $class){
+			if($class == 'required'){
+				return "
+						if(checkInput('#{$this->id}', 'Required Input')){
+							noError = false;
+						}
+
+						";
+			} else {
+				return "";
+			}
+		}
 	}
 }
 
@@ -358,6 +406,23 @@ class Radio_Input {
 
 		return $radios_html;
 	}
+
+	private function is_required(){
+		$class_list = explode(' ', $this->classes);
+
+		foreach($class_list as $class){
+			if($class == 'required'){
+				return "
+						if(checkInput('#{$this->id}', 'Required Input')){
+							noError = false;
+						}
+
+						";
+			} else {
+				return "";
+			}
+		}
+	}
 }
 
 class Textarea_Input {
@@ -389,6 +454,23 @@ class Textarea_Input {
 						</div>";
 	}
 
+	private function is_required(){
+		$class_list = explode(' ', $this->classes);
+
+		foreach($class_list as $class){
+			if($class == 'required'){
+				return "
+						if(checkInput('#{$this->id}', 'Required Input')){
+							noError = false;
+						}
+
+						";
+			} else {
+				return "";
+			}
+		}
+	}
+
 }
 
 class Text_Element {
@@ -417,6 +499,23 @@ class Text_Element {
 							<label class='col-sm-12 errorLabel'></label>
 						</div>";
 	}
+
+	private function is_required(){
+		$class_list = explode(' ', $this->classes);
+
+		foreach($class_list as $class){
+			if($class == 'required'){
+				return "
+						if(checkInput('#{$this->id}', 'Required Input')){
+							noError = false;
+						}
+
+						";
+			} else {
+				return "";
+			}
+		}
+	}
 }
 
 class Submit_Element {
@@ -438,6 +537,23 @@ class Submit_Element {
 						<div class='col-sm-12 form-horizontal'>
 							<input type='submit' id='{$this->id}' name='{$this->id}' class='{$this->classes}' value='{$this->val}'>
 						</div>";
+	}
+
+	private function is_required(){
+		$class_list = explode(' ', $this->classes);
+
+		foreach($class_list as $class){
+			if($class == 'required'){
+				return "
+						if(checkInput('#{$this->id}', 'Required Input')){
+							noError = false;
+						}
+
+						";
+			} else {
+				return "";
+			}
+		}
 	}
 }
 
