@@ -1,20 +1,26 @@
 <?php
 
-
 class Form {
 
+	private $form_name;
+	private $db_name;
 	private $data;
 	private $form_html;
 	private $form_js;
 	private $form_js_required;
 	private $form_css;
 	private $form_php;
+	private $form_php_required;
+	private $element_list = [];
 
 
-	public function __construct($data){
+	public function __construct($data, $form_name, $db_name){
 		$this->data = $data;
+		$this->form_name = $this->scrub_name($form_name);
+		$this->db_name = $this->scrub_name($db_name);
 		$this->create_form();
 		$this->form_js = $this->create_js();
+		$this->form_php = $this->create_php();
 	}
 
 	private function create_form(){
@@ -26,6 +32,7 @@ class Form {
 				foreach($containers->containers as $element){
 					if($element->data !== null){
 						$element_class = $this->select_type($element);
+						$this->element_list[] = $element_class;
 						$this->form_html .= $element_class->html;
 						$this->form_js_required .= $element_class->is_required();
 					}
@@ -50,6 +57,9 @@ class Form {
 			var event = e.originalEvent;
 			event.preventDefault ? e.preventDefault() : event.returnValue = false;
 			$(this).ajaxSubmit({
+				url:		   'php/main.php',
+				type:		   'POST',
+				dataType:	   'JSON',
 				beforeSubmit:  showRequest,
 				success:       showResponse,
 				error:		   showError
@@ -86,7 +96,6 @@ class Form {
 	}
 
 	function showResponse(response, status, xhr, \$form){
-		response = JSON.parse(response);
 		if(response.success){
 			$('#fb-form')[0].reset();
 			createMessage('success', response.text);
@@ -152,6 +161,116 @@ class Form {
 	}
 
 })( jQuery );";
+	}
+	
+	private function create_php(){
+		return '
+<?php
+	require "PHPMailer/PHPMailerAutoload.php";
+	require "sendMail.php";
+	require "databaseQuery.php";
+	
+	' . 
+	$this->get_post_data() .
+	'
+	//SQL Statements
+	'.
+	$this->get_sql_statements()
+	
+	. '
+	
+	$result = db_query($sql, "' . $this->db_name . '");
+	if($result === false) {
+		$response["success"] = false;
+		$response["text"] = db_error();
+		die(json_encode($response));
+	} else {
+		$response["success"] = true;
+		$response["text"] = "Successfully Submitted Form";
+		die(json_encode($response));	
+	}
+	
+	function missing_data() {
+		$response["success"] = false;
+		$response["text"] = "Missing Data";
+		die(json_encode($response));
+	}
+	
+?>	
+	';
+	}
+	
+	private function get_post_data(){
+		$req_data = "";
+		$non_req_data = "";
+		$quoted_data = "";
+		foreach($this->element_list as $element){
+			if(!is_a($element, 'Submit_Element')){
+				$eID = $this->scrub_name($element->get_id());
+				if($element->get_required() == false){
+					$non_req_data .= 
+		'$' . $eID . ' = empty($_POST["' . $element->get_id() . '"]) ? NULL : $_POST["' . $element->get_id() . '"];
+	';
+				} else {
+					$req_data .=
+		'empty($_POST["' . $element->get_id() . '"]) ? missing_data() : $' . $eID . ' = $_POST["' . $element->get_id() . '"];
+	';	
+				}
+				$quoted_data .= 
+		'$' . $eID . '_quoted = db_quote($' . $eID . ');
+	';
+			}
+		}
+		
+		$data = 
+	'//Non Required Form Data
+	' . $non_req_data . '
+	//Required Form Data
+	' . $req_data . '
+	//Quoted Data
+	' . $quoted_data;
+		return $data;
+	}
+	
+	private function get_sql_statements(){
+		$sql_statement = "\$sql = \"INSERT INTO {$this->form_name} ";
+		$sql_columns = "(submission_date, ";
+		$sql_values = "VALUES (CURDATE(), ";
+		$create_values = "(id int NOT NULL AUTO_INCREMENT PRIMARY KEY, submission_date date, ";
+		
+		foreach($this->element_list as $element){
+			if(!is_a($element, 'Submit_Element')){
+				$eID = $this->scrub_name($element->get_id());
+				$sql_columns .= $eID . ', ';
+				$sql_values .= '{$' . $element->get_id() . '_quoted}, ';
+				$create_values .= $eID . " {$element->db_type}, ";
+			}
+		}
+		
+		$sql_columns = substr($sql_columns, 0, -2);
+		$sql_values = substr($sql_values, 0, -2);
+		$create_values = substr($create_values, 0, -2);
+		
+		$sql_columns .= ") ";
+		$sql_values .= ')";';
+		$create_values .= ")";
+		
+		$create_statement =
+		"\$sql = 'CREATE TABLE IF NOT EXISTS " . $this->form_name . " " . $create_values . "';
+	\$result = db_query(\$sql, '" . $this->db_name . "');
+	
+	";
+		
+		
+		$sql_statement .= $sql_columns . $sql_values;
+		return $create_statement . $sql_statement;
+	}
+	
+	private function scrub_name($name){
+		$name = preg_replace('/[^.[:alnum:]_-]/','_',trim($name));
+		$name = preg_replace('/\.*$/','',$name);
+		
+		return $name;
 	}
 	
 	private function start_html(){
@@ -228,6 +347,10 @@ class Form {
 	public function get_js(){
 		return $this->form_js;
 	}
+	
+	public function get_php(){
+		return $this->form_php;	
+	}
 }
 
 
@@ -237,7 +360,9 @@ class Text_Input {
 	private $value;
 	private $placeholder;
 	private $label;
+	private $required;
 	public $html;
+	public $db_type = "varchar(255)";
 
 	public function __construct($data){
 		$this->id = $data->id;
@@ -265,6 +390,7 @@ class Text_Input {
 
 		foreach($class_list as $class){
 			if($class == 'required'){
+				$this->required = true;
 				return 		
 		"if(checkInput('#{$this->id}', 'Required Input')){
 			noError = false;
@@ -272,7 +398,16 @@ class Text_Input {
 		";
 			}
 		}
+		$this->required = false;
 		return "";
+	}
+	
+	public function get_id(){
+		return $this->id;	
+	}
+	
+	public function get_required(){
+		return $this->required;	
 	}
 
 }
@@ -283,7 +418,9 @@ class Select_Input {
 	private $value;
 	private $label;
 	private $options;
+	private $required;
 	public $html;
+	public $db_type = "varchar(255)";
 
 	public function __construct($data){
 		$this->id = $data->id;
@@ -327,6 +464,7 @@ class Select_Input {
 
 		foreach($class_list as $class){
 			if($class == 'required'){
+				$this->required = true;
 				return
 		"if(checkInput('#{$this->id}', 'Required Input')){
 			noError = false;
@@ -334,6 +472,7 @@ class Select_Input {
 		";
 			}
 		}
+		$this->required = false;
 		return "";
 	}
 }
@@ -342,7 +481,9 @@ class Checkbox_Input {
 	private $label;
 	private $group_name;
 	private $checkboxes;
+	private $required;
 	public $html;
+	public $db_type = "varchar(255)";
 
 	public function __construct($data){
 		$this->label = $data->label;
@@ -380,6 +521,7 @@ class Checkbox_Input {
 
 		foreach($class_list as $class){
 			if($class == 'required'){
+				$this->required = true;
 				return 
 		"if(checkInput('#{$this->id}', 'Required Input')){
 			noError = false;
@@ -387,6 +529,7 @@ class Checkbox_Input {
 		";
 			}
 		}
+		$this->required = false;
 		return "";
 	}
 }
@@ -395,7 +538,9 @@ class Radio_Input {
 	private $label;
 	private $group_name;
 	private $radios;
+	private $required;
 	public 	$html;
+	public $db_type = "varchar(255)";
 
 	public function __construct($data){
 		$this->label 		= $data->label;
@@ -433,6 +578,7 @@ class Radio_Input {
 
 		foreach($class_list as $class){
 			if($class == 'required'){
+				$this->required = true;
 				return 
 		"if(checkInput('#{$this->id}', 'Required Input')){
 			noError = false;
@@ -440,6 +586,7 @@ class Radio_Input {
 		";
 			}
 		}
+		$this->required = false;
 		return "";
 	}
 }
@@ -450,7 +597,9 @@ class Textarea_Input {
 	private $text;
 	private $placeholder;
 	private $label;
+	private $required;
 	public $html;
+	public $db_type = "text";
 
 	public function __construct($data){
 		$this->id = $data->id;
@@ -478,6 +627,7 @@ class Textarea_Input {
 
 		foreach($class_list as $class){
 			if($class == 'required'){
+				$this->required = true;
 				return 
 		"if(checkInput('#{$this->id}', 'Required Input')){
 			noError = false;
@@ -485,6 +635,7 @@ class Textarea_Input {
 		";
 			}
 		}
+		$this->required = false;
 		return "";
 	}
 
@@ -495,6 +646,7 @@ class Text_Element {
 	private $classes;
 	private $text;
 	private $type;
+	private $required;
 	public  $html;
 
 	public function __construct($data){
@@ -522,6 +674,7 @@ class Text_Element {
 
 		foreach($class_list as $class){
 			if($class == 'required'){
+				$this->required = true;
 				return 
 		"if(checkInput('#{$this->id}', 'Required Input')){
 			noError = false;
@@ -529,6 +682,7 @@ class Text_Element {
 		";
 			}
 		}
+		$this->required = false;
 		return "";
 	}
 }
@@ -537,6 +691,7 @@ class Submit_Element {
 	private $id;
 	private $classes;
 	private $value;
+	private $required;
 	public  $html;
 
 	public function __construct($data){
@@ -559,6 +714,7 @@ class Submit_Element {
 
 		foreach($class_list as $class){
 			if($class == 'required'){
+				$this->required = true;
 				return 
 		"if(checkInput('#{$this->id}', 'Required Input')){
 			noError = false;
@@ -566,6 +722,7 @@ class Submit_Element {
 		";
 			}
 		}
+		$this->required = false;
 		return "";
 	}
 }

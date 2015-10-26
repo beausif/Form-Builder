@@ -772,7 +772,7 @@ function createForm(){
 
     $('#buildDiv').ajaxSubmit({
         success: showResponse,
-        data: { form_data: createSubmitData() },
+        data: { form_data: createSubmitData(), form_name: $('#formName').val(), db_name: $('#dbName').val() },
         type: "POST",
         url : "php/createForm.php",
         dataType : "JSON"

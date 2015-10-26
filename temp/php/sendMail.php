@@ -4,14 +4,14 @@ function sendEmail($addressArray, $subject, $body, $altBody, $theFile = Null, $f
 	$mail = new PHPMailer;
 	
 	$mail->isSMTP();                                      // Set mailer to use SMTP
-	$mail->Host = 'hqxchg1.balkamp.com';  // Specify main and backup SMTP servers
-	//$mail->SMTPAuth = true; // authentication enabled
-	//$mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for GMail
-	//$mail->Host = "smtp.gmail.com";
-	//$mail->Port = 465; // or 587
-	//$mail->IsHTML(true);                            
-	//$mail->Username = 'beausif3@gmail.com';                            
-	//$mail->Password = 'rowdy317';
+	//$mail->Host = 'hqxchg1.balkamp.com';  // Specify main and backup SMTP servers
+	$mail->SMTPAuth = true; // authentication enabled
+	$mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for GMail
+	$mail->Host = "smtp.gmail.com";
+	$mail->Port = 465; // or 587
+	$mail->IsHTML(true);                            
+	$mail->Username = 'beausif3@gmail.com';                            
+	$mail->Password = 'rowdy317';
 	
 	$mail->From = 'bkInfo@balkamp.com';
 	$mail->FromName = "BK Info";

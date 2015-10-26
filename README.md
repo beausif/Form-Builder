@@ -10,17 +10,18 @@ Creating forms by hand can be a hassle even when you have a nice code catalog of
 
 ## To-Do
 
-Currently on submission only the HTML is generated. The PHP, JS, and CSS still need to be automatically generated. The files then need to be zipped together and served to the client.
-
 - [x] Automate generation of HTML
-- [ ] Automate generation of PHP
-- [ ] Automate generation of JS
-- [ ] Automate generation of CSS
-- [ ] Add option for form submission by mail, db, or both
+- [x] Automate generation of PHP
+- [x] Automate generation of JS
+- [x] Automate generation of CSS
+- [x] Functionality to Create and Insert to DB
+- [ ] Functionality to Send Confirmation Email
+- [ ] Functionality to Send Notification Email
+- [ ] Create Zip of Generated Files and Serve as a Download
 - [ ] Add more element functionality such as tables, anchors, images, and file input
 - [ ] Move modal html to server-side
 - [ ] Standardize commenting
-- [ ] Minimize dependencies
+- [x] Minimize dependencies
 - [ ] Refactor code
 - [ ] Finalize installation process
 
@@ -44,8 +45,6 @@ A large shout-out to them and the great work that they have done!
 - **[jQuery](https://github.com/jquery/jquery)**
 - **[jQuery ui](https://github.com/jquery/jquery-ui)**
 - **[jQuery Form](https://github.com/malsup/form)**
-- **[jQuery Masked Input](https://github.com/digitalBush/jquery.maskedinput)**
-- **[jQuery Numeric](https://github.com/SamWM/jQuery-Plugins/tree/master/numeric/)**
 - **[json3](https://github.com/bestiejs/json3)**
 
 ## License
