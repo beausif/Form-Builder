@@ -4,14 +4,7 @@ function sendEmail($addressArray, $subject, $body, $altBody, $theFile = Null, $f
 	$mail = new PHPMailer;
 	
 	$mail->isSMTP();                                      // Set mailer to use SMTP
-	//$mail->Host = 'hqxchg1.balkamp.com';  // Specify main and backup SMTP servers
-	$mail->SMTPAuth = true; // authentication enabled
-	$mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for GMail
-	$mail->Host = "smtp.gmail.com";
-	$mail->Port = 465; // or 587
-	$mail->IsHTML(true);                            
-	$mail->Username = 'beausif3@gmail.com';                            
-	$mail->Password = 'rowdy317';
+	$mail->Host =   // REQUIRED: YOU MUST ENTER HOST INFORMATION HERE
 	
 	$mail->From = 'bkInfo@balkamp.com';
 	$mail->FromName = "BK Info";
@@ -35,10 +28,12 @@ function sendEmail($addressArray, $subject, $body, $altBody, $theFile = Null, $f
 	$mail->AltBody = $altBody;
 	
 	if(!$mail->send()) {
-		echo 'Mailer Error: ' . $mail->ErrorInfo;
-		return false;
+		$response['success'] = false;
+		$response['error'] = $mail->ErrorInfo;
+		return $response;
 	} else {
-		return true;
+		$response['success'] = false;
+		return $response;
 	}
 }
 

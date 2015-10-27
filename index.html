@@ -580,40 +580,146 @@
     </div>
 </form>
 
+<form class="modal" data-backdrop="static" data-keyboard="false" id="create-new-form-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Create New Form</h4>
+            </div>
+            <div class="modal-body col-sm-12">
+                <div id="showSubmitModal" class="col-sm-12">
+                    <div class="row form-group">
+                        <div class="col-sm-12">
+                            <label for="formNameModal" class="col-sm-12 control-label">Form Name:</label>
+                            <div class="col-sm-12">
+                                <input type="text" id="formNameModal" name="formNameModal" class="form-control">
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h4 class="addBold">Manage Submissions</h4>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-12">
+                            <label for="submissionType" class="col-sm-12 control-label">Select One:</label>
+                            <div class="col-sm-12">
+                                <select id="submissionType" name="submissionType" class="form-control">
+									<option value="" selected disabled>Select One</option>
+									<option value="db">Database</option>
+									<option value="email">Email</option>
+									<option value="both">Database &amp; Email</option>
+								</select>
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+                    </div>
+                    <div id="databaseRow" class="row form-group hide">
+                        <div class="col-sm-12">
+                            <label for="databaseName" class="col-sm-12 control-label">Database Name:</label>
+                            <div class="col-sm-12">
+                                <input type="text" id="databaseName" name="databaseName" class="form-control">
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+                    </div>
+                    <div id="emailRow" class="row form-group hide">
+						<div class="col-sm-12">
+                            <label for="notificationEmail" class="col-sm-12 control-label">Send Notification Email To:(Required if no DB)</label>
+                            <div class="col-sm-12">
+                                <input type="text" id="notificationEmail" name="notificationEmail" class="form-control">
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+						<div class="col-sm-12">
+							<h5 class="addBold">Text Input with name email required!</h5>
+						</div>
+						<div class="col-sm-12">
+                            <label for="confirmationEmail" class="col-sm-12 control-label">Confirmation Email:(Optional)</label>
+                            <div class="col-sm-12">
+								<select id="confirmationEmail" name="confirmationEmail" class="form-control">
+									<option value="yes">Yes</option>
+									<option value="no">No</option>
+								</select>
+                            </div>
+                            <label class="col-sm-12 errorLabel"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-warning" id="buildFormModal">Build Form</button>
+            </div>
+        </div>
+    </div>
+</form>
+
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12">
-            <h2 class="text-center">Form Builder</h2>
+            <h1 class="text-center">Form Builder</h1>
         </div>
     </div>
 </div>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-6 text form-horizontal">
-            <label class="col-sm-12 errorLabel"></label>
-            <label for="formName" class="col-sm-12 control-label">Form Name:</label>
-            <div class="elementDiv col-sm-12">
-                <input type="text" id="formName" name="formName" class="form-control required" value="" placeholder="Your Form Name">
-            </div>
-        </div>
-		<div class="col-sm-6 text form-horizontal">
-            <label class="col-sm-12 errorLabel"></label>
-            <label for="formName" class="col-sm-12 control-label">Database Name:</label>
-            <div class="elementDiv col-sm-12">
-                <input type="text" id="dbName" name="dbName" class="form-control required" value="" placeholder="Your Database Name">
-            </div>
-        </div>
-    </div>
+<div id="newFormDiv" class="container-fluid">
+	<div class="row">
+		<div class="col-sm-4 col-sm-offset-4">
+			<input type="button" id="newFormButton" class="form-control btn btn-primary" value="New Form">
+		</div>
+	</div>
 </div>
-<div class="container-fluid topMargin">
-    <div class="row">
-        <div class="col-sm-3">
-            <input type="button" id="addRowButton" class="btn btn-warning form-control" value="Add Row">
-        </div>
-    </div>
+<div id="formInfoDiv" class="container-fluid">
+	<div id="formNameDiv" class="container-fluid hide">
+		<div class="row">
+			<div class="col-sm-4 col-sm-offset-4 text form-horizontal">
+				<label for="fb-formName" class="col-sm-12 control-label">Form Name:</label>
+				<div class="elementDiv col-sm-12">
+					<input type="text" id="fb-formName" name="fb-formName" class="form-control required" value="" disabled>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="formDatabaseDiv" class="container-fluid hide">
+		<div class="row">
+			<div class="col-sm-4 col-sm-offset-4 text form-horizontal">
+				<label for="fb-dbName" class="col-sm-12 control-label">Database Name:</label>
+				<div class="elementDiv col-sm-12">
+					<input type="text" id="fb-dbName" name="fb-dbName" class="form-control required" value="" disabled>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="formEmailDiv" class="container-fluid hide">
+		<div class="row">
+			<div class="col-sm-4 col-sm-offset-4 text form-horizontal">
+				<label for="fb-notificationEmail" class="col-sm-12 control-label">Send Notification Email To:</label>
+				<div class="elementDiv col-sm-12">
+					<input type="text" id="fb-notificationEmail" name="fb-notificationEmail" class="form-control" value="" disabled>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4 col-sm-offset-4 text form-horizontal">
+				<label for="fb-confirmationEmail" class="col-sm-12 control-label">Send Confirmation Email:</label>
+				<div class="elementDiv col-sm-12">
+					<input type="text" id="fb-confirmationEmail" name="fb-confirmationEmail" class="form-control" value="" disabled>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-<div class="container-fluid">
+
+
+<div class="container-fluid topMargin hide fb">
+	<div class="row">
+		<div class="col-sm-3">
+			<input type="button" id="addRowButton" class="btn btn-warning form-control" value="Add Row">
+		</div>
+	</div>
     <div id="buildDiv" class="row">
         <div class="fullRow">
             <div class="controlRow col-sm-12">
@@ -653,7 +759,7 @@
     </div>
 </div>
 
-<div class="container-fluid bigTopMargin">
+<div class="container-fluid bigTopMargin hide fb">
     <div class="row">
         <h2 class="text-center">Form Preview</h2>
     </div>
@@ -661,7 +767,7 @@
     </form>
 </div>
 
-<div class="container-fluid bigTopMargin">
+<div class="container-fluid bigTopMargin hide fb">
     <div class="row">
         <div class="col-sm-6 col-sm-offset-3">
             <input type="button" id="createForm" class="btn btn-success form-control" value="Download Files">

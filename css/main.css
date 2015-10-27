@@ -16,6 +16,10 @@ html {
 	float:none;
 }
 
+.nolabel {
+	padding-top:7px;	
+}
+
 .addBold {
 	font-weight: bold;
 }

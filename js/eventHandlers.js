@@ -6,6 +6,12 @@
  *
  *******************************************/
 function bindEventHandlers(){
+	$('#newFormButton').off('click').on('click', showNewFormModal);
+	$('#submissionType').off('change').on('change', setManageSubmissions);
+	$('#buildFormModal').off('click').on('click', setNewForm);
+	
+	
+	
     $('#addRowButton').off('click').on('click', addRow);
     $('.addElement, .addNewElementButton').off('click').on('click', insertEmptyElement);
     $('.elementContainer').off('mouseenter').off('mouseleave').on('mouseenter mouseleave', toggleOptionRow);

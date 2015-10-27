@@ -30,6 +30,88 @@ function addRadio(){
     $('.close').off('click').on('click', deleteOptionRow);
 }
 
+/********************************************
+ *
+ * Set Up New Form Data
+ *
+ *******************************************/
+function showNewFormModal(){
+	$('#create-new-form-modal').modal('show');
+	bindEventHandlers();
+}
+
+function setManageSubmissions(){
+	if($(this).val() == 'db'){
+		$('#emailRow').addClass('hide');
+		$('#databaseRow').removeClass('hide');	
+	} else if($(this).val() == 'email'){
+		$('#databaseRow').addClass('hide');
+		$('#emailRow').removeClass('hide');
+	} else if($(this).val() == 'both'){
+		$('#databaseRow, #emailRow').removeClass('hide');	
+	} else {
+		$('#databaseRow, #emailRow').addClass('hide');
+	}
+}
+
+function setNewForm(){
+	var noError = true;
+	resetErrors();
+	
+	if(checkInput('#formNameModal', 'Form Name Required')){
+		noError = false;
+	}
+	
+	if($('#submissionType').val() == 'both'){
+		if(checkInput('#databaseName', 'Database Name Required')){
+			noError = false;
+		}
+		if(checkInput('#notificationEmail', 'Notification Email Required')){
+			noError = false;
+		}
+	} else if($('#submissionType').val() == 'db'){
+		if(checkInput('#databaseName', 'Database Name Required')){
+			noError = false;
+		}
+	} else if($('#submissionType').val() == 'email'){
+		if(checkInput('#notificationEmail', 'Notification Email Required')){
+			noError = false;
+		}	
+	} else {
+		if(checkInput('#submissionType', 'Must Select One')){
+			noError = false;
+		}
+	}
+	
+	if(noError){
+		$('#fb-formName').val($('#formNameModal').val());
+		$('#formNameDiv').removeClass('hide');
+		switch($('#submissionType').val()) {
+			case 'both':
+				$('#fb-dbName').val($('#databaseName').val());
+				$('#fb-notificationEmail').val($('#notificationEmail').val());
+				$('#fb-confirmationEmail').val($('#confirmationEmail').val());
+				$('#formDatabaseDiv').removeClass('hide');
+				$('#formEmailDiv').removeClass('hide');
+				break;
+			case 'db':
+				$('#fb-dbName').val($('#databaseName').val());
+				$('#formDatabaseDiv').removeClass('hide');
+				break;
+			case 'email':
+				$('#fb-notificationEmail').val($('#notificationEmail').val());
+				$('#fb-confirmationEmail').val($('#confirmationEmail').val());
+				$('#formEmailDiv').removeClass('hide');
+				break;
+		}
+		$('#create-new-form-modal').modal('hide');
+		$('#newFormDiv').addClass('hide');
+		$('.fb').removeClass('hide');
+	} else {
+			
+	}
+	
+}
 
 /********************************************
  *
@@ -311,7 +393,7 @@ function createTextareaInput(id, label, classes, value, placeholder){
 }
 
 function createSubmitInput(id, value, classes){
-    return getElementStart('submit') + '<input type="submit" id="' + id + '" name="' + id + '" class="btn form-control ' + classes + '" value="' + value + '">' + getElementEnd();
+    return getElementStart('submit') + '<input type="submit" id="' + id + '" name="' + id + '" class="btn btn-warning form-control ' + classes + '" value="' + value + '">' + getElementEnd();
 }
 
 
@@ -769,10 +851,15 @@ function setRowColumnSize(){
  *******************************************/
 function createForm(){
     $('.subBtn').prop('disabled', true);
+	
+	/* TODO
+	CHECK FOR EMAIL FIELD IF CONFIRMATION IS YES
+	CHECK THAT ALL INFORMATION IS RECEIVED
+	*/
 
     $('#buildDiv').ajaxSubmit({
         success: showResponse,
-        data: { form_data: createSubmitData(), form_name: $('#formName').val(), db_name: $('#dbName').val() },
+        data: { form_data: createSubmitData(), form_name: $('#fb-formName').val(), db_name: $('#fb-dbName').val(), notification_email: $('#fb-notificationEmail').val(), confirmation_email: $('#fb-confirmationEmail').val() },
         type: "POST",
         url : "php/createForm.php",
         dataType : "JSON"
@@ -997,4 +1084,16 @@ function getSubmitInfo(element){
     dataObj.value       = $(submit).val();
 
     return dataObj;
+}
+
+function checkInput(input, error){
+	var errors = false;
+	$(input).each(function(index, element){
+		if($.trim($(element).val()) == ''){
+			errors = true;
+			$(element).addClass('errorBorder');
+			$(element).parent().next('.errorLabel').text(error);
+		}
+	});
+	return errors;
 }
