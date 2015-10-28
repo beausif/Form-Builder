@@ -37,7 +37,7 @@ function bindEventHandlers(){
     $('#insertSelectElement').off('click').on('click', getSelectElement);
     $('#insertTextInputElement').off('click').on('click', getTextInputElement);
     $('#insertTextareaElement').off('click').on('click', getTextareaElement);
-    $('#insertTextElement').off('click').on('click', insertTextElement);
+    $('#insertTextElement').off('click').on('click', getTextElement);
     $('#insertSubmitElement').off('click').on('click', getSubmitElement);
     $('.vc_row_layouts').off('mouseenter').off('mouseleave').on('mouseenter', showLayouts).on('mouseleave', hideLayouts);
 

@@ -97,6 +97,12 @@ label {
 	margin: 0;
 }
 
+#message-div {
+	position: fixed;
+    z-index: 999999;
+    width: 100%;	
+}
+
 .inline {
     display: inline-block!important;
 }

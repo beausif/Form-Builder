@@ -224,23 +224,29 @@ function getSelectElement(){
     }
 }
 
-function getButtonElement(){
+function getTextElement(){
     var error = false;
-    var buttonElementValue = $('#buttonValue');
-    var buttonElementClasses = $('#selectElementClasses');
-    var buttonElementID = $('#selectElementID');
+    var textElementClasses = $('#headerElementClasses');
+    var textElementType = $('#elementTextType');
+    var textElementID = $('#headerElementID');
+	var textElementText = $('#headerText');
 
-
-    if(buttonElementValue.val() == ''){
-        $(buttonElementValue).addClass('errorBorder').parent().prevAll('.errorLabel').text('Please Enter Button Value');
+    if(textElementType.val() == 'null'){
+        $(textElementType).addClass('errorBorder').parent().prevAll('.errorLabel').text('Please Select Element Type');
         error = true;
     }
-    if(buttonElementID.val() == '' || $('#' + buttonElementID.val()).length){
-        $(buttonElementID).addClass('errorBorder').parent().prevAll('.errorLabel').text('Please Enter Element ID');
+    if(textElementID.val() == '' || $('#' + textElementID.val()).length){
+        $(textElementID).addClass('errorBorder').parent().prevAll('.errorLabel').text('Please Enter Element ID');
         error = true;
     }
+	if(textElementText.val() == '' || $('#' + textElementText.val()).length){
+        $(textElementText).addClass('errorBorder').parent().prevAll('.errorLabel').text('Please Enter Element Text');
+        error = true;
+    }
+
     if(!error){
-        element = createButtonInput(buttonElementID.val(), buttonElementClasses.val(), buttonElementValue.val());
+
+        element = createTextElementInput(textElementID.val(), textElementClasses.val(), textElementType.val(), textElementText.val());
         insertElement(element);
     } else {
         return false;
@@ -390,6 +396,10 @@ function createRadioInput(label, radios){
 
 function createTextareaInput(id, label, classes, value, placeholder){
     return getElementStart('textarea') + '<label for="' + id + '" class="col-sm-12 control-label">' + label + '</label><div class="elementDiv col-sm-12"><textarea cols="4" id="' + id + '" name="' + id + '" class="form-control ' + classes + '" placeholder="' + placeholder + '">' + value + '</textarea>' + getElementEnd();
+}
+
+function createTextElementInput (elementID, elementClasses, type, text){
+    return getElementStart('textElement') + '<div class="elementDiv col-sm-12"><' + type + ' id="' + elementID + '" name="' + elementID + '" class="' + elementClasses + '" data-type="' + type + '">' + text + '</' + type + '>' + getElementEnd();
 }
 
 function createSubmitInput(id, value, classes){
@@ -846,6 +856,36 @@ function setRowColumnSize(){
 
 /********************************************
  *
+ * Creates a bootstrap success or error message
+ *
+ *******************************************/
+function createMessage(type, message){
+		var alert_type = null;
+		var alert_msg = null;
+		var html = null;
+		if(type == 'success'){
+			alert_type = 'success';
+			alert_msg = 'Success!';
+		} else {
+			alert_type = 'danger';
+			alert_msg = 'Error!';
+		}
+
+		html = ' \
+		<div class="col-sm-6 col-sm-offset-3"> \
+			<div class="alert alert-' + alert_type + ' fade in"> \
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> \
+				<strong>' + alert_msg + ' </strong><p class="inline">' + message + '<p> \
+			</div> \
+		</div>';
+
+
+		$('#message-div').html(html);
+		window.scrollTo(0,0);
+	}
+
+/********************************************
+ *
  * Creates AJAX call to process form data on server
  *
  *******************************************/
@@ -853,9 +893,16 @@ function createForm(){
     $('.subBtn').prop('disabled', true);
 	
 	/* TODO
-	CHECK FOR EMAIL FIELD IF CONFIRMATION IS YES
 	CHECK THAT ALL INFORMATION IS RECEIVED
 	*/
+	
+	if($('#fb-confirmationEmail').val() == 'yes'){
+		if(!$('input[type=text][name="email"]').length ) {
+			createMessage('danger', 'Confirmation email set to yes. This requires a Text Input Element with the name email');
+			$('.subBtn').prop('disabled', false);
+			return false;
+		}
+	}
 
     $('#buildDiv').ajaxSubmit({
         success: showResponse,
@@ -871,15 +918,18 @@ function createForm(){
  * Parses AJAX response from server
  *
  *******************************************/
-function showResponse(responseText)  {
-    responseText = JSON.parse(responseText);
-    if(responseText['success']){
-        $('#form-messages').text(responseText['html']);
-        console.log(responseText);
-    } else {
-        $('#form-messages').text(responseText['error']);
-    }
-    $('.subBtn').prop('disabled', false);
+function showResponse(response, status, xhr, $form){
+	if(response.success){
+		createMessage('success', response.text);
+	} else {
+		createMessage('error', response.text);
+	}
+	$('input[type=submit]').prop('disabled', false);
+}
+
+function showError(jqXHR, textStatus, errorThrown) {
+	$('input[type=submit]').prop('disabled', false);
+	createMessage('error', 'Problem submitting the form : ' +  jqXHR + ' | ' + textStatus + ' | ' + errorThrown);
 }
 
 /********************************************

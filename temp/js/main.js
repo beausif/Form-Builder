@@ -95,15 +95,15 @@
 		}
 
 		html = ' \
-		<div class=\'col-sm-6 col-sm-offset-3\'> \
-			<div class=\'alert alert-\' + alert_type + \'fade in\'> \
-				<a href=\'#\' class=\'close\' data-dismiss=\'alert\' aria-label=\'close\'>&times;</a> \
-				<strong>\' + alert_msg + \' </strong><p class=\'inline-text\'>\' + message + \'<p> \
+		<div class="col-sm-6 col-sm-offset-3"> \
+			<div class="alert alert-' + alert_type + ' fade in"> \
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> \
+				<strong>' + alert_msg + ' </strong><p class="inline">' + message + '<p> \
 			</div> \
 		</div>';
 
 
-		$('message-div').html(html);
+		$('#message-div').html(html);
 		window.scrollTo(0,0);
 	}
 

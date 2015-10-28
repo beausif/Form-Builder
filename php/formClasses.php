@@ -24,6 +24,12 @@ class Form {
 		$this->note_email = $note_email;
 		$this->conf_email = $conf_email;
 		$this->create_form();
+		echo $this->form_email;
+		if($this->conf_email == 'yes' && empty($this->form_email)){
+			$response["success"] = false;
+			$response["text"] = "Confirmation email set to yes. This requires a Text Input Element with the name email";
+			die(json_encode($response));
+		}
 		$this->form_js = $this->create_js();
 		$this->form_php = $this->create_php();
 	}
@@ -156,15 +162,15 @@ class Form {
 		}
 
 		html = ' \
-		<div class=\'col-sm-6 col-sm-offset-3\'> \
-			<div class=\'alert alert-\' + alert_type + \'fade in\'> \
-				<a href=\'#\' class=\'close\' data-dismiss=\'alert\' aria-label=\'close\'>&times;</a> \
-				<strong>\' + alert_msg + \' </strong><p class=\'inline-text\'>\' + message + \'<p> \
+		<div class=\"col-sm-6 col-sm-offset-3\"> \
+			<div class=\"alert alert-' + alert_type + ' fade in\"> \
+				<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a> \
+				<strong>' + alert_msg + ' </strong><p class=\"inline\">' + message + '<p> \
 			</div> \
 		</div>';
 
 
-		$('message-div').html(html);
+		$('#message-div').html(html);
 		window.scrollTo(0,0);
 	}
 
@@ -256,7 +262,7 @@ class Form {
 					<table style="font-size: 18px; font-weight: 300;">';
 					
 									foreach($this->element_list as $element){
-										if(!is_a($element, 'Submit_Element') && !is_a($element, 'Text_Element')){
+										if($element->get_user_element()){
 											$php .= '	
 						<tr>
 							<td style="text-align: right;  padding: 10px;">' . $element->get_label() . ': </td>
@@ -309,7 +315,7 @@ class Form {
 		$array_check = "";
 		$quoted_data = "";
 		foreach($this->element_list as $element){
-			if(!is_a($element, 'Submit_Element')){
+			if($element->get_user_element()){
 				$eID = $this->scrub_name($element->get_id());
 				if($element->get_required() == false){
 					$non_req_data .= 
@@ -352,7 +358,7 @@ class Form {
 		$create_values = "(id int NOT NULL AUTO_INCREMENT PRIMARY KEY, submission_date date, ";
 		
 		foreach($this->element_list as $element){
-			if(!is_a($element, 'Submit_Element')){
+			if($element->get_user_element()){
 				$eID = $this->scrub_name($element->get_id());
 				$sql_columns .= $eID . ', ';
 				$sql_values .= '{$' . $eID . '_quoted}, ';
@@ -394,6 +400,7 @@ class Form {
 		<link href='css/main.css' rel='stylesheet'>
 	</head>
 	<body>
+		<div id='message-div' class='row'></div>
 		<form id='fb-form'>
 ";
 	}
@@ -472,6 +479,7 @@ class Element {
 	protected $label;
 	protected $required;
 	protected $value;
+	protected $user_element;
 	public $html;
 	
 	public function is_required(){
@@ -510,6 +518,10 @@ class Element {
 	public function get_classes(){
 		return $this->classes;	
 	}
+	
+	public function get_user_element(){
+		return $this->user_element;	
+	}
 }
 
 class Text_Input extends Element {
@@ -522,6 +534,7 @@ class Text_Input extends Element {
 		$this->value = $data->value;
 		$this->placeholder = $data->placeholder;
 		$this->label = $data->label;
+		$this->user_element = true;
 
 		$this->create_element();
 	}
@@ -548,6 +561,7 @@ class Select_Input extends Element {
 		$this->value = $data->value;
 		$this->label = $data->label;
 		$this->options = $data->options;
+		$this->user_element = true;
 
 		$this->create_element();
 
@@ -590,6 +604,7 @@ class Checkbox_Input extends Element {
 		$this->id 			= str_replace('[]', '', $data->group_name);
 		$this->group_name 	= str_replace('[]', '', $data->group_name);
 		$this->checkboxes 	= $data->checkboxes;
+		$this->user_element = true;
 
 		$this->create_element();
 	}
@@ -628,6 +643,7 @@ class Radio_Input extends Element {
 		$this->id 			= str_replace('[]', '', $data->group_name);
 		$this->group_name 	= str_replace('[]', '', $data->group_name);
 		$this->radios 		= $data->radio;
+		$this->user_element = true;
 
 		$this->create_element();
 	}
@@ -667,6 +683,7 @@ class Textarea_Input extends Element {
 		$this->text = $data->text;
 		$this->placeholder = $data->placeholder;
 		$this->label = $data->label;
+		$this->user_element = true;
 
 		$this->create_element();
 	}
@@ -691,8 +708,8 @@ class Text_Element extends Element {
 		$this->id = $data->id;
 		$this->classes = $data->classes;
 		$this->text = $data->text;
-		$this->label = $data->label;
 		$this->type = $data->type;
+		$this->user_element = false;
 
 		$this->create_element();
 	}
@@ -714,6 +731,7 @@ class Submit_Element extends Element {
 		$this->id = $data->id;
 		$this->classes = $data->classes;
 		$this->value = $data->value;
+		$this->user_element = false;
 		
 		$this->create_element();
 	}
