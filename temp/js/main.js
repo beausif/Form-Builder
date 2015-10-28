@@ -32,6 +32,9 @@
 		var noError = true;
 		$('input[type=submit]').prop('disabled', true);
 
+		if(checkInput('#asdfaf', 'Required Input')){
+			noError = false;
+		}
 		
 
 		if(noError){
