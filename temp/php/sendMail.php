@@ -32,7 +32,7 @@ function sendEmail($addressArray, $subject, $body, $altBody, $theFile = Null, $f
 		$response['error'] = $mail->ErrorInfo;
 		return $response;
 	} else {
-		$response['success'] = false;
+		$response['success'] = true;
 		return $response;
 	}
 }

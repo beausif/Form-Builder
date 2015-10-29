@@ -24,7 +24,6 @@ class Form {
 		$this->note_email = $note_email;
 		$this->conf_email = $conf_email;
 		$this->create_form();
-		echo $this->form_email;
 		if($this->conf_email == 'yes' && empty($this->form_email)){
 			$response["success"] = false;
 			$response["text"] = "Confirmation email set to yes. This requires a Text Input Element with the name email";
@@ -47,7 +46,7 @@ class Form {
 						$this->form_html .= $element_class->html;
 						$this->form_js_required .= $element_class->is_required();
 						if($element_class->get_id() == 'email'){
-							$this->form_email = $element_class->get_value();
+							$this->form_email = true;
 						}
 					}
 				}
