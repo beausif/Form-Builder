@@ -30,5 +30,6 @@ $form = new Form($form_data, $form_name, $db_name, $note_email, $conf_email);
 file_put_contents("../temp/index.html", $form->get_html());
 file_put_contents("../temp/js/main.js", $form->get_js());
 file_put_contents("../temp/php/main.php", $form->get_php());
+file_put_contents("../temp/php/email.php", $form->get_php_email());
 
 ?>
