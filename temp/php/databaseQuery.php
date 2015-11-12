@@ -1,6 +1,6 @@
 <?php
 
-class pdo_mysql {
+class PdoMysql {
 	private $host;
 	private $user;
 	private $pass;

@@ -1,6 +1,6 @@
 <?php
 
-require 'formClasses.php';
+require 'classes/Form.php';
 
 $form_data = empty($_POST['form_data']) ? NULL : json_decode($_POST['form_data']);
 $form_name = empty($_POST['form_name']) ? NULL : $_POST['form_name'];
@@ -23,13 +23,10 @@ if($form_name === NULL){
 $form_data = $form_data->rows;
 
 $form = new Form($form_data, $form_name, $db_name, $note_email, $conf_email);
-//echo $form->get_html();
-//echo $form->get_js();
-//echo $form->get_php();
 
-file_put_contents("../temp/index.html", $form->get_html());
-file_put_contents("../temp/js/main.js", $form->get_js());
-file_put_contents("../temp/php/main.php", $form->get_php());
-file_put_contents("../temp/php/email.php", $form->get_php_email());
+file_put_contents("../temp/index.html", $form->get_html()->get_html());
+file_put_contents("../temp/js/main.js", $form->get_js()->get_js());
+file_put_contents("../temp/php/main.php", $form->get_php_main()->get_php_main());
+file_put_contents("../temp/php/email.php", $form->get_php_email()->get_php_email());
 
 ?>
