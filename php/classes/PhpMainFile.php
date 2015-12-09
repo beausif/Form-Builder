@@ -80,7 +80,7 @@ class PhpMainFile {
 	private function get_sql_statements(){
 		$sql_statement = 
 	'try {
-		$db->db_query("INSERT INTO ' . $this->db_name;
+		$db->db_query("INSERT INTO ' . $this->form_name;
 		
 
 		$sql_columns = " (submission_date, ";

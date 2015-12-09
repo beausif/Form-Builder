@@ -6,12 +6,14 @@ class HtmlFile {
 
 	private $html;
 	private $data;
+	private $form_name;
 	private $element_list = [];
 	private $has_email;
 	private $form_js_required;
 
-	public function __construct($data){
+	public function __construct($data, $form_name){
 		$this->data = $data;
+		$this->form_name = $form_name;
 		$this->create_html();
 	}
 	
@@ -45,6 +47,12 @@ class HtmlFile {
 	<head>
 		<link href='css/bootstrap.min.css' rel='stylesheet'>
 		<link href='css/main.css' rel='stylesheet'>
+		<!--[if IE 9]>
+			<style>
+				input {line-height: 1!important;}
+			</style> 
+		<![endif]-->
+		<title>" . $this->form_name . "</title>
 	</head>
 	<body>
 		<div id='message-div' class='row'></div>

@@ -26,7 +26,7 @@ class Form {
 		$this->note_email 	= $note_email;
 		$this->conf_email 	= $conf_email;
 
-		$this->html 		= new HtmlFile($data);
+		$this->html 		= new HtmlFile($data, $form_name);
 		$this->js 			= new JsFile($this->html->get_form_js_required());
 		$this->php_main 	= new PhpMainFile($this->db_name, $this->html->get_has_email(), $this->html->get_element_list(), $this->form_name);
 		$this->php_email 	= new PhpEmailFile($this->note_email, $this->conf_email, $this->form_name . ' Confirmation Email');
