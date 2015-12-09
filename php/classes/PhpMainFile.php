@@ -114,7 +114,9 @@ class PhpMainFile {
 	'try {
 		$db->db_query("CREATE TABLE IF NOT EXISTS ' . $this->form_name . ' ' . $create_values . '");
 	} catch (PDOException $ex) {
-		echo $ex->getMessage();
+		$response["success"] = false;
+		$response["text"] = "DB Error: " . $ex->getMessage();
+		die(json_encode($response));
 	}
 	
 	';
@@ -124,7 +126,9 @@ class PhpMainFile {
 		
 		$sql_statement .= $params . '
 	} catch (PDOException $ex) {
-		echo $ex->getMessage();
+		$response["success"] = false;
+		$response["text"] = "DB Error: " . $ex->getMessage();
+		die(json_encode($response));
 	}
 	
 	';
@@ -148,13 +152,17 @@ class PhpMainFile {
 	try {
 		$result = $db->db_query("CREATE DATABASE IF NOT EXISTS ' . $this->db_name . '");
 	} catch (PDOException $ex) {
-		echo $ex->getMessage();
+		$response["success"] = false;
+		$response["text"] = "DB Error: " . $ex->getMessage();
+		die(json_encode($response));
 	}
 
 	try {
 		$db->db_new_connection("' . $this->db_name . '");
 	} catch (PDOException $ex) {
-		echo $ex->getMessage();
+		$response["success"] = false;
+		$response["text"] = "DB Error: " . $ex->getMessage();
+		die(json_encode($response));
 	}
 
 	' . $this->get_sql_statements() . '

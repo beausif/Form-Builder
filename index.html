@@ -58,24 +58,13 @@
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col-sm-12">
-                            <label for="checkboxName" class="col-sm-12 control-label">Checkbox Group Name</label>
-                            <div class="col-sm-12">
-                                <input type="text" id="checkboxName" name="checkboxName" class="form-control">
-                            </div>
-                            <label class="col-sm-12 errorLabel"></label>
-                        </div>
-                    </div>
-                    <div class="row form-group">
                         <div class="col-sm-12 table-responsive">
                             <label class="col-sm-12 errorLabel sortErrorLabel"></label>
                             <table id="checkboxTable" class="table table-bordered text-center">
                                 <thead>
                                 <tr class="success">
                                     <th class="addBold">Remove</th>
-                                    <th class="addBold">ID</th>
-                                    <th class="addBold">Classes</th>
-                                    <th class="addBold">Text Label</th>
+                                    <th class="addBold">Text</th>
                                     <th class="addBold">Value</th>
                                 </tr>
                                 </thead>
@@ -83,12 +72,6 @@
                                 <tr>
                                     <td>
                                         <button type="button" class="close form-control" aria-hidden="true">X</button>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control checkID">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control checkClass">
                                     </td>
                                     <td>
                                         <input type="text" class="form-control checkLabel">
@@ -132,23 +115,12 @@
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col-sm-12">
-                            <label for="radioName" class="col-sm-12 control-label">Checkbox Group Name</label>
-                            <div class="col-sm-12">
-                                <input type="text" id="radioName" name="radioName" class="form-control">
-                            </div>
-                            <label class="col-sm-12 errorLabel"></label>
-                        </div>
-                    </div>
-                    <div class="row form-group">
                         <div class="col-sm-12 table-responsive">
                             <label class="col-sm-12 errorLabel sortErrorLabel"></label>
                             <table id="radioTable" class="table table-bordered text-center">
                                 <thead>
                                 <tr class="success">
                                     <th class="addBold">Remove</th>
-                                    <th class="addBold">ID</th>
-                                    <th class="addBold">Classes</th>
                                     <th class="addBold">Text Label</th>
                                     <th class="addBold">Value</th>
                                 </tr>
@@ -157,12 +129,6 @@
                                 <tr>
                                     <td>
                                         <button type="button" class="close form-control" aria-hidden="true">X</button>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control radioID">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control radioClass">
                                     </td>
                                     <td>
                                         <input type="text" class="form-control radioLabel">
@@ -196,15 +162,6 @@
             </div>
             <div class="modal-body col-sm-12">
                 <div id="showDropdownModal" class="col-sm-12">
-                    <div class="row form-group">
-                        <div class="col-sm-12">
-                            <label for="selectElementID" class="col-sm-12 control-label">Element ID:</label>
-                            <div class="col-sm-12">
-                                <input type="text" id="selectElementID" name="selectElementID" class="form-control">
-                            </div>
-                            <label class="col-sm-12 errorLabel"></label>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <h5 class="addBold">Some Allowed Classes</h5>
@@ -236,11 +193,12 @@
                     <div class="row form-group">
                         <div class="col-sm-12 table-responsive">
                             <label class="col-sm-12 errorLabel sortErrorLabel"></label>
+							<label class="col-sm-12 control-label">Options</label>
                             <table id="optionTable" class="table table-bordered text-center">
                                 <thead>
                                 <tr class="success">
                                     <th class="addBold">Remove</th>
-                                    <th class="addBold">Name</th>
+                                    <th class="addBold">Text</th>
                                     <th class="addBold">Value</th>
                                     <th class="addBold">Options</th>
                                 </tr>
@@ -292,15 +250,6 @@
             </div>
             <div class="modal-body col-sm-12">
                 <div id="showTextModal" class="col-sm-12">
-                    <div class="row form-group">
-                        <div class="col-sm-12">
-                            <label for="textElementID" class="col-sm-12 control-label">Element ID:</label>
-                            <div class="col-sm-12">
-                                <input type="text" id="textElementID" name="textElementID" class="form-control">
-                            </div>
-                            <label class="col-sm-12 errorLabel"></label>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <h5 class="addBold">Some Allowed Classes</h5>
@@ -308,11 +257,6 @@
                         <div class="col-sm-12">
                             <div class="col-sm-8">
                                 <p class="possibleClasses">required</p>
-                                <p class="possibleClasses">phoneMask</p>
-                                <p class="possibleClasses">dateMask</p>
-                                <p class="possibleClasses">threeDigitMask</p>
-                                <p class="possibleClasses">fourDigitMask</p>
-                                <p class="possibleClasses">positive-integer</p>
                             </div>
                         </div>
                     </div>
@@ -370,15 +314,6 @@
             </div>
             <div class="modal-body col-sm-12">
                 <div id="showTextAreaModal" class="col-sm-12">
-                    <div class="row form-group">
-                        <div class="col-sm-12">
-                            <label for="textareaElementID" class="col-sm-12 control-label">Element ID:</label>
-                            <div class="col-sm-12">
-                                <input type="text" id="textareaElementID" name="textareaElementID" class="form-control">
-                            </div>
-                            <label class="col-sm-12 errorLabel"></label>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <h5 class="addBold">Some Allowed Classes</h5>
@@ -444,15 +379,6 @@
             </div>
             <div class="modal-body col-sm-12">
                 <div id="showHeaderModal" class="col-sm-12">
-                    <div class="row form-group">
-                        <div class="col-sm-12">
-                            <label for="headerElementID" class="col-sm-12 control-label">Element ID:</label>
-                            <div class="col-sm-12">
-                                <input type="text" id="headerElementID" name="headerElementID" class="form-control">
-                            </div>
-                            <label class="col-sm-12 errorLabel"></label>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <h5 class="addBold">Some Allowed Classes</h5>
@@ -468,15 +394,6 @@
                             <label for="headerElementClasses" class="col-sm-12 control-label">Element Classes:</label>
                             <div class="col-sm-12">
                                 <input type="text" id="headerElementClasses" name="headerElementClasses" class="form-control">
-                            </div>
-                            <label class="col-sm-12 errorLabel"></label>
-                        </div>
-                    </div>
-                    <div class="row form-group labelRow">
-                        <div class="col-sm-12">
-                            <label for="headerElementLabelText" class="col-sm-12 control-label">Label Text:</label>
-                            <div class="col-sm-12">
-                                <input type="text" id="headerElementLabelText" name="headerElementLabelText" class="form-control">
                             </div>
                             <label class="col-sm-12 errorLabel"></label>
                         </div>
@@ -525,15 +442,6 @@
             </div>
             <div class="modal-body col-sm-12">
                 <div id="showSubmitModal" class="col-sm-12">
-                    <div class="row form-group">
-                        <div class="col-sm-12">
-                            <label for="submitElementID" class="col-sm-12 control-label">Element ID:</label>
-                            <div class="col-sm-12">
-                                <input type="text" id="submitElementID" name="submitElementID" class="form-control">
-                            </div>
-                            <label class="col-sm-12 errorLabel"></label>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <h5 class="addBold">Some Allowed Classes</h5>
@@ -549,15 +457,6 @@
                             <label for="submitElementClasses" class="col-sm-12 control-label">Element Classes:</label>
                             <div class="col-sm-12">
                                 <input type="text" id="submitElementClasses" name="submitElementClasses" class="form-control">
-                            </div>
-                            <label class="col-sm-12 errorLabel"></label>
-                        </div>
-                    </div>
-                    <div class="row form-group labelRow">
-                        <div class="col-sm-12">
-                            <label for="submitElementLabelText" class="col-sm-12 control-label">Label Text:</label>
-                            <div class="col-sm-12">
-                                <input type="text" id="submitElementLabelText" name="submitElementLabelText" class="form-control">
                             </div>
                             <label class="col-sm-12 errorLabel"></label>
                         </div>

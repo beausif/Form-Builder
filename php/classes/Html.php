@@ -8,8 +8,9 @@ class HtmlFile {
 	private $data;
 	private $form_name;
 	private $element_list = [];
-	private $has_email;
+	private $has_email = false;
 	private $form_js_required;
+	private $current_counter = 0;
 
 	public function __construct($data, $form_name){
 		$this->data = $data;
@@ -89,19 +90,24 @@ class HtmlFile {
 	private function select_type($element){
 	    switch($element->type) {
 	        case 'text':
-	            $e = new Text_Input($element->data);
+	            $e = new Text_Input($element->data, $this->current_counter);
+				$this->current_counter += 1;
 	            break;
 	        case 'select':
-	            $e = new Select_Input($element->data);
+	            $e = new Select_Input($element->data, $this->current_counter);
+				$this->current_counter += 1;
 	            break;
 	        case 'checkbox':
-	            $e = new Checkbox_Input($element->data);
+	            $e = new Checkbox_Input($element->data, $this->current_counter);
+				$this->current_counter += 1;
 	            break;
 	        case 'radio':
-	            $e = new Radio_Input($element->data);
+	            $e = new Radio_Input($element->data, $this->current_counter);
+				$this->current_counter += 1;
 	            break;
 	        case 'textarea':
-	            $e = new Textarea_Input($element->data);
+	            $e = new Textarea_Input($element->data, $this->current_counter);
+				$this->current_counter += 1;
 	            break;
 	        case 'submit':
 	            $e = new Submit_Element($element->data);

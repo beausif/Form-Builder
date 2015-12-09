@@ -363,7 +363,11 @@ th, td {
 }
 
 .elementDiv .btn {
-    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.elementDiv:last-child {
+    margin-bottom: 0px;
 }
 
 .checkbox label {

@@ -5,10 +5,9 @@ class Checkbox_Input extends Element {
 	private $checkboxes;
 	public $db_type = "varchar(255)";
 
-	public function __construct($data){
+	public function __construct($data, $count){
 		$this->label 		= $data->label;
-		$this->id 			= str_replace('[]', '', $data->group_name);
-		$this->group_name 	= str_replace('[]', '', $data->group_name);
+		$this->id 			= $data->label . '_' . str_pad($count, 5, '0', STR_PAD_LEFT);
 		$this->checkboxes 	= $data->checkboxes;
 		$this->user_element = true;
 
@@ -30,7 +29,7 @@ class Checkbox_Input extends Element {
 		$checkboxes_html = null;
 		foreach($checkboxes as $checkbox){ 
 			$checkboxes_html .= "<label class='{$checkbox->classes}'>
-									<input type='checkbox' id='{$checkbox->id}' name='{$this->group_name}[]' value='{$checkbox->value}'> {$checkbox->name}
+									<input type='checkbox' id='{$checkbox->id}' name='{$this->id}[]' value='{$checkbox->value}'> {$checkbox->name}
 								</label>
 								";
 		}

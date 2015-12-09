@@ -20,8 +20,8 @@ Creating forms by hand can be a hassle even when you have a nice code catalog of
 - [ ] Automatically include Submit Button on Bottom of Form (Remove it from the Elements Allowed to Add)
 - [x] Fix the Text Element
 - [x] Implement PDO over mysqli
-- [ ] Generate ID on server side for elements
-- [ ] Restructure what information users provide for elements
+- [x] Generate ID on server side for elements
+- [x] Restructure what information users provide for elements
 - [ ] Add editing functionality to elements on client side
 - [ ] Add editing functionality to form information on client side
 - [ ] Create Zip of Generated Files and Serve as a Download

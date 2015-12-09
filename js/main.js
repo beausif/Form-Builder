@@ -22,12 +22,12 @@ function addOption(){
 }
 
 function addCheckbox(){
-    $('#checkboxBody').append('<tr><td><button type="button" class="close form-control" aria-hidden="true">X</button></td><td><input type="text" class="form-control checkID"></td><td><input type="text" class="form-control checkClass"></td><td><input type="text" class="form-control checkLabel"></td><td><input type="text" class="form-control checkValue"></td></tr>');
+    $('#checkboxBody').append('<tr><td><button type="button" class="close form-control" aria-hidden="true">X</button></td><td><input type="text" class="form-control checkLabel"></td><td><input type="text" class="form-control checkValue"></td></tr>');
     $('.close').off('click').on('click', deleteOptionRow);
 }
 
 function addRadio(){
-    $('#radioBody').append('<tr><td><button type="button" class="close form-control" aria-hidden="true">X</button></td><td><input type="text" class="form-control radioID"></td><td><input type="text" class="form-control radioClass"></td><td><input type="text" class="form-control radioLabel"></td><td><input type="text" class="form-control radioValue"></td></tr>');
+    $('#radioBody').append('<tr><td><button type="button" class="close form-control" aria-hidden="true">X</button></td><td><input type="text" class="form-control radioLabel"></td><td><input type="text" class="form-control radioValue"></td></tr>');
     $('.close').off('click').on('click', deleteOptionRow);
 }
 
@@ -160,6 +160,9 @@ function insertElement(element){
 		$('.modal').each(function(index, element) {
 			$(this)[0].reset();
 		});
+		removeEmptyCheckboxRows();
+		removeEmptyRadioRows();
+		removeEmptyTableRows();
 		resetErrors();
     }
 }
@@ -177,14 +180,9 @@ function getTextInputElement(){
     var error = false;
     var textElementClasses = $('#textElementClasses');
     var textElementLabelText = $('#textElementLabelText');
-    var textElementID = $('#textElementID');
 
     if(textElementLabelText.val() === ''){
         $(textElementLabelText).addClass('errorBorder').parent().prevAll('.errorLabel').text('Please Enter Label Text');
-        error = true;
-    }
-    if(textElementID.val() === '' || $('#' + textElementID.val()).length){
-        $(textElementID).addClass('errorBorder').parent().prevAll('.errorLabel').text('Please Enter Element ID');
         error = true;
     }
 
@@ -192,7 +190,7 @@ function getTextInputElement(){
         var textValue = $('#textValue').val();
         var textPlaceholder = $('#textPlaceholder').val();
 
-        var element = createTextInput(textElementID.val(), textElementLabelText.val(), textElementClasses.val(), textValue, textPlaceholder);
+        var element = createTextInput(textElementLabelText.val(), textElementClasses.val(), textValue, textPlaceholder);
         insertElement(element);
     } else {
         return false;
@@ -203,16 +201,12 @@ function getSelectElement(){
     var error = false;
     var selectElementClasses = $('#selectElementClasses');
     var selectElementLabelText = $('#selectElementLabelText');
-    var selectElementID = $('#selectElementID');
 
     if(selectElementLabelText.val() === ''){
         $(selectElementLabelText).addClass('errorBorder').parent().prevAll('.errorLabel').text('Please Enter Label Text');
         error = true;
     }
-    if(selectElementID.val() === '' || $('#' + selectElementID.val()).length){
-        $(selectElementID).addClass('errorBorder').parent().prevAll('.errorLabel').text('Please Enter Element ID');
-        error = true;
-    }
+
     if(!error){
 
         removeEmptyTableRows();
@@ -222,7 +216,7 @@ function getSelectElement(){
 
         var options = getTableOptions('#optionBody');
 
-        var element = createSelectInput(selectElementID.val(), selectElementLabelText.val(), selectElementClasses.val(), options);
+        var element = createSelectInput(selectElementLabelText.val(), selectElementClasses.val(), options);
         insertElement(element);
     } else {
         return false;
@@ -233,15 +227,10 @@ function getTextElement(){
     var error = false;
     var textElementClasses = $('#headerElementClasses');
     var textElementType = $('#elementTextType');
-    var textElementID = $('#headerElementID');
 	var textElementText = $('#headerText');
 
     if(textElementType.val() === 'null'){
         $(textElementType).addClass('errorBorder').parent().prevAll('.errorLabel').text('Please Select Element Type');
-        error = true;
-    }
-    if(textElementID.val() === '' || $('#' + textElementID.val()).length){
-        $(textElementID).addClass('errorBorder').parent().prevAll('.errorLabel').text('Please Enter Element ID');
         error = true;
     }
 	if(textElementText.val() === '' || $('#' + textElementText.val()).length){
@@ -250,8 +239,7 @@ function getTextElement(){
     }
 
     if(!error){
-
-        var element = createTextElementInput(textElementID.val(), textElementClasses.val(), textElementType.val(), textElementText.val());
+        var element = createTextElementInput(textElementClasses.val(), textElementType.val(), textElementText.val());
         insertElement(element);
     } else {
         return false;
@@ -322,19 +310,9 @@ function getTextareaElement(){
     var textareaPlaceholder = $('#textareaPlaceholder').val();
     var textareaElementLabelText = $('#textareaElementLabelText');
     var textareaElementClasses = $('#textareaElementClasses');
-    var textareaElementID = $('#textareaElementID');
-
-    if(textareaElementLabelText.val() === ''){
-        $(textareaElementLabelText).addClass('errorBorder').parent().prevAll('.errorLabel').text('Please Enter Label Text');
-        error = true;
-    }
-    if(textareaElementID.val() === '' || $('#' + textareaElementID.val()).length){
-        $(textareaElementID).addClass('errorBorder').parent().prevAll('.errorLabel').text('Please Enter Element ID');
-        error = true;
-    }
 
     if(!error){
-        var element = createTextareaInput(textareaElementID.val(), textareaElementLabelText.val(), textareaElementClasses.val(), textareaValue, textareaPlaceholder);
+        var element = createTextareaInput(textareaElementLabelText.val(), textareaElementClasses.val(), textareaValue, textareaPlaceholder);
         insertElement(element);
     } else {
         return false;
@@ -344,20 +322,15 @@ function getTextareaElement(){
 function getSubmitElement(){
     var error = false;
     var submitElementValue = $('#submitValue');
-    var submitElementID = $('#submitElementID');
     var submitElementClasses = $('#submitElementClasses');
 
     if(submitElementValue.val() === ''){
         $(submitElementValue).addClass('errorBorder').parent().prevAll('.errorLabel').text('Please Enter Submit Value');
         error = true;
     }
-    if(submitElementID.val() === '' || $('#' + submitElementID.val()).length){
-        $(submitElementID).addClass('errorBorder').parent().prevAll('.errorLabel').text('Please Enter Element ID');
-        error = true;
-    }
 
     if(!error){
-        var element = createSubmitInput(submitElementID.val(), submitElementValue.val(), submitElementClasses.val());
+        var element = createSubmitInput(submitElementValue.val(), submitElementClasses.val());
         insertElement(element);
     } else {
         return false;
@@ -379,16 +352,16 @@ function getElementEnd(){
     return '</div><label class="col-sm-12 errorLabel"></label>';
 }
 
-function createTextInput (elementID, labelText, elementClasses, textValue, textPlaceholder){
-    return getElementStart('text') + '<label for="' + elementID + '" class="col-sm-12 control-label">' + labelText + '</label><div class="elementDiv col-sm-12"><input type="text" id="' + elementID + '" name="' + elementID + '" class="form-control ' + elementClasses + '" value="' + textValue + '" placeholder="' + textPlaceholder + '">' + getElementEnd();
+function createTextInput (labelText, elementClasses, textValue, textPlaceholder){
+    return getElementStart('text') + '<label class="col-sm-12 control-label">' + labelText + '</label><div class="elementDiv col-sm-12"><input type="text" class="form-control ' + elementClasses + '" value="' + textValue + '" placeholder="' + textPlaceholder + '">' + getElementEnd();
 }
 
-function createSelectInput(id, label, classes, options) {
-    return getElementStart('select') + '<label for="' + id + '" class="col-sm-12 control-label">' + label + '</label><div class="elementDiv col-sm-12"><select id="' + id + '" name="' + id + '" class="form-control ' + classes + '">' + options + '</select>' + getElementEnd();
+function createSelectInput(label, classes, options) {
+    return getElementStart('select') + '<label class="col-sm-12 control-label">' + label + '</label><div class="elementDiv col-sm-12"><select class="form-control ' + classes + '">' + options + '</select>' + getElementEnd();
 }
 
-function createButtonInput(id, classes, value){
-    return getElementStart('button') + '<input type="button" id="' + id + '" name="' + id + '" class="btn form-control ' + classes + '" value="' + value + '">' + getElementEnd();
+function createButtonInput(classes, value){
+    return getElementStart('button') + '<input type="button" class="btn form-control ' + classes + '" value="' + value + '">' + getElementEnd();
 }
 
 function createCheckboxInput(label, checkboxes){
@@ -399,16 +372,16 @@ function createRadioInput(label, radios){
     return getElementStart('radio') + '<label class="col-sm-12 control-label">' + label + '</label><div class="elementDiv col-sm-12">' + radios + getElementEnd();
 }
 
-function createTextareaInput(id, label, classes, value, placeholder){
-    return getElementStart('textarea') + '<label for="' + id + '" class="col-sm-12 control-label">' + label + '</label><div class="elementDiv col-sm-12"><textarea cols="4" id="' + id + '" name="' + id + '" class="form-control ' + classes + '" placeholder="' + placeholder + '">' + value + '</textarea>' + getElementEnd();
+function createTextareaInput(label, classes, value, placeholder){
+    return getElementStart('textarea') + '<label class="col-sm-12 control-label">' + label + '</label><div class="elementDiv col-sm-12"><textarea cols="4" class="form-control ' + classes + '" placeholder="' + placeholder + '">' + value + '</textarea>' + getElementEnd();
 }
 
-function createTextElementInput (elementID, elementClasses, type, text){
-    return getElementStart('textElement') + '<div class="elementDiv col-sm-12"><' + type + ' id="' + elementID + '" name="' + elementID + '" class="' + elementClasses + '" data-type="' + type + '">' + text + '</' + type + '>' + getElementEnd();
+function createTextElementInput (elementClasses, type, text){
+    return getElementStart('textElement') + '<div class="elementDiv col-sm-12"><' + type + ' class="' + elementClasses + '" data-type="' + type + '">' + text + '</' + type + '>' + getElementEnd();
 }
 
-function createSubmitInput(id, value, classes){
-    return getElementStart('submit') + '<input type="submit" id="' + id + '" name="' + id + '" class="btn btn-warning form-control ' + classes + '" value="' + value + '">' + getElementEnd();
+function createSubmitInput(value, classes){
+    return getElementStart('submit') + '<input type="submit" class="btn btn-warning form-control ' + classes + '" value="' + value + '">' + getElementEnd();
 }
 
 
@@ -424,7 +397,7 @@ function removeEmptyTableRows(){
             $(this).remove();
         }
     });
-    if(tRow.length === 0){
+    if($("#optionBody").find("tr").length === 0){
         addOption($("#optionBody"));
     }
 }
@@ -437,11 +410,12 @@ function removeEmptyTableRows(){
 function removeEmptyCheckboxRows(){
     var tRow = $("#checkboxBody").find("tr");
     tRow.each(function(){
-        if($(this).find('.checkID').val() === '' && $(this).find('.checkLabel').val() === '' && $(this).find('.checkValue').val() === ''){
+        if($(this).find('.checkLabel').val() === '' && $(this).find('.checkValue').val() === ''){
             $(this).remove();
         }
     });
-    if(tRow.length === 0){
+
+    if($("#checkboxBody").find("tr").length === 0){
         addCheckbox($("#checkboxBody"));
     }
 }
@@ -454,11 +428,11 @@ function removeEmptyCheckboxRows(){
 function removeEmptyRadioRows(){
     var tRow = $("#radioBody").find("tr");
     tRow.each(function(){
-        if($(this).find('.radioID').val() === '' && $(this).find('.radioLabel').val() === '' && $(this).find('.radioValue').val() === ''){
+        if($(this).find('.radioLabel').val() === '' && $(this).find('.radioValue').val() === ''){
             $(this).remove();
         }
     });
-    if(tRow.length === 0){
+    if($("#radioBody").find("tr").length === 0){
         addRadio($("#radioBody"));
     }
 }
@@ -495,13 +469,8 @@ function checkboxRows(){
     var error = false;
     var tRow = $("#checkboxBody").find("tr");
     tRow.each(function(){
-        var checkboxID = $(this).find('.checkID');
         var checkboxLabel = $(this).find('.checkLabel');
         var checkboxValue = $(this).find('.checkValue');
-        if(checkboxID.val() === ''){
-            checkboxID.addClass('errorBorder');
-            error = true;
-        }
         if(checkboxLabel.val() === ''){
             checkboxLabel.addClass('errorBorder');
             error = true;
@@ -523,13 +492,8 @@ function radioRows(){
     var error = false;
     var tRow = $("#radioBody").find("tr");
     tRow.each(function(){
-        var radioID = $(this).find('.radioID');
-        var radioLabel = $(this).find('.radioLabel');
+		var radioLabel = $(this).find('.radioLabel');
         var radioValue = $(this).find('.radioValue');
-        if(radioID.val() === ''){
-            radioID.addClass('errorBorder');
-            error = true;
-        }
         if(radioLabel.val() === ''){
             radioLabel.addClass('errorBorder');
             error = true;
@@ -565,7 +529,7 @@ function getTableOptions(tbody){
             disabled = ' disabled="disabled"';
         }
 
-        optionData += '<option name="' + optionName + '"' + selected + disabled +  ' value="' + optionValue + '">' + optionValue + '</option>';
+        optionData += '<option ' + selected + disabled +  ' value="' + optionValue + '">' + optionValue + '</option>';
     });
 
     return optionData;
@@ -581,12 +545,10 @@ function getCheckboxData(tbody){
     var tRow = $(tbody).find("tr");
     var checkName = $('#checkboxName').val();
     tRow.each(function(){
-        var checkID = $(this).find('.checkID').val();
-        var checkClass = $(this).find('.checkClass').val();
         var checkLabel = $(this).find('.checkLabel').val();
         var checkValue = $(this).find('.checkValue').val();
 
-        optionData += '<label class="btn btn-default radioButton"><input type="checkbox" id="' + checkID + '" name="' + checkName + '[]" value="' + checkValue + '"> ' + checkLabel + '</label>';
+        optionData += '<label class="btn btn-default radioButton"><input type="checkbox" name="' + checkName + '[]" value="' + checkValue + '"> ' + checkLabel + '</label>';
     });
 
     return optionData;
@@ -602,12 +564,10 @@ function getRadioData(tbody){
     var tRow = $(tbody).find("tr");
     var radioName = $('#radioName').val();
     tRow.each(function(){
-        var radioID = $(this).find('.radioID').val();
-        var radioClass = $(this).find('.radioClass').val();
         var radioLabel = $(this).find('.radioLabel').val();
         var radioValue = $(this).find('.radioValue').val();
 
-        optionData += '<label class="btn btn-default radioButton"><input type="radio" id="' + radioID + '" name="' + radioName + '[]" value="' + radioValue + '"> ' + radioLabel + '</label>';
+        optionData += '<label class="btn btn-default radioButton"><input type="radio" name="' + radioName + '[]" value="' + radioValue + '"> ' + radioLabel + '</label>';
     });
 
     return optionData;
@@ -780,6 +740,7 @@ function createPreview(){
     $(pElement).find('div').removeClass('elementDiv');
 
     $('#fullPreview').empty().append(pElement);
+	$('input[type="submit"]').attr('disabled', 'disabled');
 }
 
 /********************************************

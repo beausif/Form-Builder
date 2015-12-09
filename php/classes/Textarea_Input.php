@@ -5,8 +5,8 @@ class Textarea_Input extends Element {
 	private $placeholder;
 	public $db_type = "text";
 
-	public function __construct($data){
-		$this->id = $data->id;
+	public function __construct($data, $count){
+		$this->id = $data->label . '_' . str_pad($count, 5, '0', STR_PAD_LEFT);
 		$this->classes = $data->classes;
 		$this->text = $data->text;
 		$this->placeholder = $data->placeholder;

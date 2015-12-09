@@ -4,8 +4,8 @@ class Text_Input extends Element {
 	private $placeholder;
 	public $db_type = "varchar(255)";
 
-	public function __construct($data){
-		$this->id = $data->id;
+	public function __construct($data, $count){
+		$this->id = $data->label . '_' . str_pad($count, 5, '0', STR_PAD_LEFT);
 		$this->classes = $data->classes;
 		$this->value = $data->value;
 		$this->placeholder = $data->placeholder;

@@ -5,10 +5,9 @@ class Radio_Input extends Element {
 	private $radios;
 	public $db_type = "varchar(255)";
 
-	public function __construct($data){
+	public function __construct($data, $count){
 		$this->label 		= $data->label;
-		$this->id 			= str_replace('[]', '', $data->group_name);
-		$this->group_name 	= str_replace('[]', '', $data->group_name);
+		$this->id 			= $data->label . '_' . str_pad($count, 5, '0', STR_PAD_LEFT);
 		$this->radios 		= $data->radio;
 		$this->user_element = true;
 
@@ -30,7 +29,7 @@ class Radio_Input extends Element {
 		$radios_html = null;
 		foreach($this->radios as $radio){ 
 			$radios_html .= "<label class='{$radio->classes}'>
-									<input type='radio' id='{$radio->id}' name='{$this->group_name}[]' value='{$radio->value}'> {$radio->name}
+									<input type='radio' id='{$radio->id}' name='{$this->id}[]' value='{$radio->value}'> {$radio->name}
 								</label>
 								";
 		}
