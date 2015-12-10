@@ -601,6 +601,7 @@ function addEmptyRow(row){
  *******************************************/
 function cloneRow(){
     var cRow = $(this).parents('.fullRow').clone();
+
     $(this).parents('.fullRow').after(cRow);
     bindEventHandlers();
 }
@@ -652,7 +653,9 @@ function setRow(layout){
 function cloneElement(){
     var element = $(this).parent().parent();
     var cElement = $(element).clone();
-
+	
+	$(cElement).children('.hiddenOptionRow').removeClass('inline');
+	
     $(element).after(cElement);
     bindEventHandlers();
 }
@@ -749,7 +752,11 @@ function createPreview(){
  *
  *******************************************/
 function toggleOptionRow(){
-    $(this).children('.hiddenOptionRow').toggleClass('inline');
+	if($(this).children('.hiddenOptionRow').hasClass('inline')){
+		$(this).children('.hiddenOptionRow').removeClass('inline');
+	} else {
+		$(this).children('.hiddenOptionRow').addClass('inline');
+	}
 }
 
 /********************************************
